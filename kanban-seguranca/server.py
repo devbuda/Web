@@ -9,7 +9,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_FILE = os.path.join(BASE_DIR, "kanban.db")
 SEED_FILE = os.path.join(BASE_DIR, "initial_tasks.json")
-PORT = int(os.environ.get("PORT", "80"))
+PORT = int(os.environ.get("PORT", "8080"))
 
 db_lock = threading.Lock()
 state_cond = threading.Condition()

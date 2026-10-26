@@ -4,12 +4,12 @@ Painel visual estilo Kanban para acompanhamento em tempo real das demandas do **
 
 ## Funcionalidades
 - **Quadro Kanban Interativo (Drag & Drop):** Arraste os cards entre as colunas **Pendente**, **Em Andamento** e **Concluído**.
-- **Salvamento Automático:** Todas as alterações são salvas automaticamente no servidor (`tasks_data.json`) e sincronizadas para todos os usuários da rede interna.
+- **Banco de Dados SQLite + Tempo Real:** Todas as alterações são salvas automaticamente no banco SQLite (`kanban.db`) no servidor e sincronizadas em tempo real para todos os usuários da rede interna.
 - **Indicadores de Progresso:** Visão geral de demandas e acompanhamento detalhado por Solução.
 
 ## Como executar no Servidor (Ubuntu)
 
 ```bash
-sudo python3 server.py
+PORT=8080 python3 server.py
 ```
-O servidor iniciará por padrão na porta `80` (`http://192.168.0.53`).
+O servidor iniciará na porta específica `8080` (`http://192.168.0.53:8080`), deixando a porta `80` livre para outros projetos web.
