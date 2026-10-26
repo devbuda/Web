@@ -1,0 +1,1074 @@
+[
+  {
+    "id": 1,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Aprovação da proposta de serviço",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 2,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Contratação do prestador de serviço",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 3,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Levantamento técnico e diagnóstico",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 4,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Planejamento executivo e preparação",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 5,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Adequação de infraestrutura para encaminhamento de cabos",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (5ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 6,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Retrofit da rede cabeada e reestruturação de pontos",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (5ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 7,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Organização de racks e ativos de rede",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 8,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Adequações elétricas de suporte ao ambiente de TI",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (5ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 9,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Retrofit da rede Wi-Fi, instalação Unifi e validações associadas",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 10,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Analise e Revisão na rede (configuração de VLAN, MikroTik e Rotas)",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 11,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Testes, comissionamento e estabilização",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 12,
+    "solution": "Serviço de Infraestrutura de Rede",
+    "pillar": "Infraestrutura",
+    "activity": "Operação assistida e entrega documental",
+    "month": "",
+    "all_months": [],
+    "schedule": "Sem data definida",
+    "status": "todo"
+  },
+  {
+    "id": 13,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Aprovação da aquisição do Firewall",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 14,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Levantamento do ambiente atual",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 15,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Compra do Firewall",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 16,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Chegada do Firewall em Manaus",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026",
+      "AGOSTO/2026"
+    ],
+    "schedule": "Julho de 2026 (5ª Semana) • Agosto de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 17,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Instalação física do Firewall",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 18,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Configuração das interfaces WAN/LAN",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 19,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Configuração das políticas de acesso à internet",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 20,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Aplicação de filtros Web e bloqueio de sites maliciosos",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026",
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana, 2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 21,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Configuração do controle de aplicações",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026",
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 22,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Bloqueio de serviços de armazenamento em nuvem pessoal",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026",
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 23,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Configuração VPN para acesso remoto seguro",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 24,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Configuração de logs e monitoramento",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (2ª Semana, 3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 25,
+    "solution": "Firewall - FortiGate 40F",
+    "pillar": "Segurança de Rede",
+    "activity": "Validação final das regras de segurança",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 26,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Aprovação da aquisição do servidor de armazenamento",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 27,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Compra do equipamento",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 28,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Chegada do equipamento em Manaus",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (4ª Semana, 5ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 29,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Instalação e configuração inicial do NAS",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 30,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Configuração de armazenamento e volumes",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 31,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Criação da estrutura de pastas corporativas",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 32,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Criação dos grupos de acesso",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 33,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Configuração das permissões por departamento",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 34,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Migração dos arquivos atuais para o NAS",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 35,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Validação dos acessos dos usuários",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 36,
+    "solution": "Servidor de Armazenamento - NAS",
+    "pillar": "Servidor de Arquivos",
+    "activity": "Configuração do Backup local e na nuvem",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 37,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Preparação do ambiente de gerenciamento",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 38,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Criação das políticas de proteção",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 39,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Configuração proteção contra ransomware",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 40,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Configuração controle de dispositivos USB - Bloqueio",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 41,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Liberação de acesso full - CEO e Diretor",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 42,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Instalação do agente nos servidores",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+    "status": "doing"
+  },
+  {
+    "id": 43,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Instalação do agente nos computadores dos usuários",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026",
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana) • Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 44,
+    "solution": "Antivirus - Bitdefender Endpoint Security",
+    "pillar": "Segurança dos Equipamentos",
+    "activity": "Validação dos equipamentos protegidos",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+    "status": "doing"
+  },
+  {
+    "id": 45,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Aprovação da aquisição do licenciamento",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 46,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Liberação da licença para uso",
+    "month": "JULHO/2026",
+    "all_months": [
+      "JULHO/2026"
+    ],
+    "schedule": "Julho de 2026 (3ª Semana, 4ª Semana, 5ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 47,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Instalação do Veeam Backup & Replication",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 48,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Configuração do NAS como repositório de backup",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 49,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Definição dos servidores e arquivos protegidos",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 50,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Configuração da política de retenção dos backups",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 51,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Criação das rotinas automáticas de backup",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 52,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Execução do primeiro backup completo",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 53,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Teste de restauração dos dados",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 54,
+    "solution": "Veeam Backup & Replication + NAS",
+    "pillar": "Backup e Continuidade",
+    "activity": "Documentação do processo de recuperação",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 55,
+    "solution": "Política de Segurança",
+    "pillar": "Identidade",
+    "activity": "Eliminação de contas compartilhadas e adoção de contas individuais",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 56,
+    "solution": "Política de Segurança",
+    "pillar": "Identidade",
+    "activity": "Gestão de acessos por grupos do Active Directory e princípio do menor privilégio",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 57,
+    "solution": "Política de Segurança",
+    "pillar": "Identidade",
+    "activity": "Bloqueio automático de tela em até 5 minutos via GPO",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 58,
+    "solution": "Política de Segurança",
+    "pillar": "Identidade",
+    "activity": "Política de senhas do domínio via GPO",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 59,
+    "solution": "Política de Segurança",
+    "pillar": "Identidade",
+    "activity": "Restrição de privilégios de administrador local via GPO",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 60,
+    "solution": "Política de Segurança",
+    "pillar": "Identidade",
+    "activity": "MFA nos consoles administrativos (FortiGate, Bitdefender, NAS e Veeam)",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 61,
+    "solution": "Política de Segurança",
+    "pillar": "Identidade",
+    "activity": "MFA para e-mail, VPN, sistemas financeiros/faturamento e nuvem corporativa",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (4ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 62,
+    "solution": "Política de Segurança",
+    "pillar": "Certificados",
+    "activity": "Varredura e eliminação de cópias do certificado digital A1",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 63,
+    "solution": "Política de Segurança",
+    "pillar": "Certificados",
+    "activity": "Definição e implantação das procurações eletrônicas por e-CPF",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 64,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Segregação das redes Wi-Fi corporativa, visitantes e operação/IoT",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 65,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Credencial temporária para a rede Wi-Fi de visitantes",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 66,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Inventário e monitoramento dos pontos de acesso e redes não autorizadas",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 67,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Controle de dispositivos homologados na rede corporativa",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 68,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Controle de acesso remoto de fornecedores por janela de atendimento",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 69,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Uso exclusivo de ferramentas de acesso remoto homologadas pela TI",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (3ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 70,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Reavaliação e governança dos acessos VPN",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (1ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 71,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "VPN com verificação de equipamento corporativo/homologado",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (3ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 72,
+    "solution": "Política de Segurança",
+    "pillar": "Redes e VPN",
+    "activity": "Controle de acesso físico à sala/rack de servidores",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 73,
+    "solution": "Política de Segurança",
+    "pillar": "Endpoints",
+    "activity": "Restrição de instalação de softwares não homologados",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (2ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 74,
+    "solution": "Política de Segurança",
+    "pillar": "Endpoints",
+    "activity": "Inventário de ativos de TI",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+    "status": "doing"
+  },
+  {
+    "id": 75,
+    "solution": "Política de Segurança",
+    "pillar": "Endpoints",
+    "activity": "Criptografia de disco dos notebooks corporativos - avaliação de viabilidade",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (1ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 76,
+    "solution": "Política de Segurança",
+    "pillar": "Endpoints",
+    "activity": "Inventário de softwares por estação via controles do Firewall",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (2ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 77,
+    "solution": "Política de Segurança",
+    "pillar": "Endpoints",
+    "activity": "Descarte seguro de equipamentos e mídias",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 78,
+    "solution": "Política de Segurança",
+    "pillar": "Arquivos/Termos",
+    "activity": "Revisão e organização da pasta Público conforme a política",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+    "status": "doing"
+  },
+  {
+    "id": 79,
+    "solution": "Política de Segurança",
+    "pillar": "Arquivos/Termos",
+    "activity": "Primeiro expurgo automático da pasta Público",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (1ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 80,
+    "solution": "Política de Segurança",
+    "pillar": "Arquivos/Termos",
+    "activity": "Coleta dos Termos de Responsabilidade dos colaboradores",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+    "status": "doing"
+  },
+  {
+    "id": 81,
+    "solution": "Política de Segurança",
+    "pillar": "Arquivos/Termos",
+    "activity": "Inclusão do Termo de Responsabilidade no processo de admissão",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (4ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 82,
+    "solution": "Política de Segurança",
+    "pillar": "Arquivos/Termos",
+    "activity": "Gestão de exceções pelo Holmes - fluxo criado e validado",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 83,
+    "solution": "Política de Segurança",
+    "pillar": "Arquivos/Termos",
+    "activity": "Publicação e formalização da Política de Segurança da Informação",
+    "month": "AGOSTO/2026",
+    "all_months": [
+      "AGOSTO/2026"
+    ],
+    "schedule": "Agosto de 2026 (4ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 84,
+    "solution": "Política de Segurança",
+    "pillar": "Backup",
+    "activity": "Implantação da rotina periódica de testes de restauração de backup",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (1ª Semana)",
+    "status": "done"
+  },
+  {
+    "id": 85,
+    "solution": "Política de Segurança",
+    "pillar": "Backup",
+    "activity": "Segregação das credenciais do repositório de backup",
+    "month": "SETEMBRO/2026",
+    "all_months": [
+      "SETEMBRO/2026"
+    ],
+    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+    "status": "doing"
+  },
+  {
+    "id": 86,
+    "solution": "Política de Segurança",
+    "pillar": "Governança",
+    "activity": "Cofre corporativo de senhas, incluindo credenciais administrativas",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (2ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 87,
+    "solution": "Política de Segurança",
+    "pillar": "Governança",
+    "activity": "Checklist de desligamento e movimentação RH + TI, incluindo procurações e certificados",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (2ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 88,
+    "solution": "Política de Segurança",
+    "pillar": "Governança",
+    "activity": "Termos de confidencialidade e requisitos de Segurança/LGPD para terceiros",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (1ª Semana)",
+    "status": "todo"
+  },
+  {
+    "id": 89,
+    "solution": "Política de Segurança",
+    "pillar": "Governança",
+    "activity": "Migração das caixas de e-mail para o modelo por função e delegação individual",
+    "month": "OUTUBRO/2026",
+    "all_months": [
+      "OUTUBRO/2026",
+      "NOVEMBRO/2026"
+    ],
+    "schedule": "Outubro de 2026 (3ª Semana, 4ª Semana) • Novembro de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
+    "status": "todo"
+  }
+]
