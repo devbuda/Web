@@ -79,9 +79,183 @@
         </div>
       </div>
 
-      <!-- Action Button -->
-      <div class="flex flex-wrap items-center gap-2">
-        <button onclick="openNewTaskModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium bg-[var(--secondary)] text-[var(--foreground)] border border-[var(--border)] hover:border-slate-500 transition shadow-sm">
+      <!-- Action Buttons: Funnel Filter (left) + Nova Atividade (right) -->
+      <div class="flex flex-wrap items-center gap-2.5 relative">
+        <!-- Botão de Filtro (Ícone de Funil) -->
+        <div class="relative" onclick="event.stopPropagation()">
+          <button
+            id="funnel-filter-btn"
+            type="button"
+            onclick="toggleFunnelPanel(event)"
+            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-medium bg-[var(--secondary)] text-[var(--foreground)] border border-[var(--border)] hover:border-slate-500 transition shadow-sm cursor-pointer"
+            title="Filtrar atividades"
+          >
+            <svg class="w-4 h-4 text-[var(--muted-foreground)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+            </svg>
+            <span>Filtros</span>
+            <span id="active-filters-badge" class="hidden px-1.5 py-0.5 text-[10px] font-bold rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 leading-none">0</span>
+          </button>
+
+          <!-- Painel Suspenso de Filtros -->
+          <div
+            id="funnel-filter-panel"
+            onclick="event.stopPropagation()"
+            class="hidden absolute right-0 top-full mt-2 w-80 sm:w-96 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-2xl p-4 z-40 space-y-3.5"
+          >
+            <div class="flex items-center justify-between border-b border-[var(--border)] pb-2.5">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                </svg>
+                <span class="text-xs font-semibold text-[var(--foreground)] uppercase tracking-wider">Filtrar Demandas</span>
+              </div>
+              <button
+                type="button"
+                onclick="resetAllFilters()"
+                class="text-xs text-[var(--muted-foreground)] hover:text-[var(--foreground)] underline cursor-pointer"
+              >
+                Limpar filtros
+              </button>
+            </div>
+
+            <!-- Busca por texto -->
+            <div>
+              <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Busca rápida (Atividade, Descrição ou Comentário)</label>
+              <input
+                id="filter-search"
+                type="text"
+                oninput="onFilterControlChange()"
+                placeholder="Digite para buscar..."
+                class="w-full px-3 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] focus:outline-none focus:border-slate-500"
+              />
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <!-- Status -->
+              <div>
+                <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Status</label>
+                <select
+                  id="filter-status"
+                  onchange="onFilterControlChange()"
+                  class="w-full px-2.5 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer"
+                >
+                  <option value="ALL">Todos os status</option>
+                  <option value="todo">Pendente</option>
+                  <option value="doing">Em Andamento</option>
+                  <option value="done">Concluído</option>
+                </select>
+              </div>
+
+              <!-- Responsável -->
+              <div>
+                <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Responsável</label>
+                <select
+                  id="filter-assignee"
+                  onchange="onFilterControlChange()"
+                  class="w-full px-2.5 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer"
+                >
+                  <option value="ALL">Todos</option>
+                  <option value="Altemiro Neto">Altemiro Neto</option>
+                  <option value="Victor Freire">Victor Freire</option>
+                  <option value="Gilvandro Almeida">Gilvandro Almeida</option>
+                  <option value="UNASSIGNED">Sem responsável</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Solução -->
+            <div>
+              <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Solução</label>
+              <select
+                id="filter-solution"
+                onchange="onSolutionSelectFilterChange(this.value)"
+                class="w-full px-2.5 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer"
+              >
+                <option value="ALL">Todas as soluções</option>
+              </select>
+            </div>
+
+            <!-- Pilar -->
+            <div>
+              <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Pilar</label>
+              <select
+                id="filter-pillar"
+                onchange="onFilterControlChange()"
+                class="w-full px-2.5 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer"
+              >
+                <option value="ALL">Todos os pilares</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5">
+              <!-- Mês / Período -->
+              <div>
+                <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Mês</label>
+                <select
+                  id="filter-month"
+                  onchange="onFilterControlChange()"
+                  class="w-full px-2.5 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer"
+                >
+                  <option value="ALL">Todos os meses</option>
+                  <option value="07/2026">Julho/2026</option>
+                  <option value="08/2026">Agosto/2026</option>
+                  <option value="09/2026">Setembro/2026</option>
+                  <option value="10/2026">Outubro/2026</option>
+                  <option value="11/2026">Novembro/2026</option>
+                  <option value="NO_DATE">Sem data definida</option>
+                </select>
+              </div>
+
+              <!-- Data específica (DD/MM/AAAA) com calendário -->
+              <div>
+                <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Data (DD/MM/AAAA)</label>
+                <div class="flex items-center gap-1">
+                  <div
+                    class="relative flex-1 flex items-center cursor-pointer"
+                    onclick="triggerDateInput('filter-date-picker')"
+                  >
+                    <div class="w-full px-2.5 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-1.5">
+                      <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                      <span id="filter-date-display" class="truncate">Todas</span>
+                    </div>
+                    <input
+                      id="filter-date-picker"
+                      type="date"
+                      onchange="onFilterDatePicked(this.value)"
+                      onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                      class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                    />
+                  </div>
+                  <button
+                    id="clear-filter-date-btn"
+                    type="button"
+                    onclick="clearFilterDate()"
+                    class="hidden px-1.5 py-1 rounded text-xs text-[var(--muted-foreground)] hover:text-red-400"
+                    title="Limpar filtro de data"
+                  >✕</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Checklist / Comentários -->
+            <div>
+              <label class="block text-[11px] font-medium text-[var(--muted-foreground)] mb-1">Detalhes do Card (Checklist / Comentários)</label>
+              <select
+                id="filter-extra"
+                onchange="onFilterControlChange()"
+                class="w-full px-2.5 py-1.5 rounded-lg text-xs bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer"
+              >
+                <option value="ALL">Todos os cards</option>
+                <option value="HAS_PENDING_SUBTASKS">Com tarefas pendentes no checklist</option>
+                <option value="HAS_SUBTASKS">Com checklist cadastrado</option>
+                <option value="HAS_COMMENTS">Com comentários publicados</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="openNewTaskModal()" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-medium bg-[var(--secondary)] text-[var(--foreground)] border border-[var(--border)] hover:border-slate-500 transition shadow-sm cursor-pointer">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
           Nova Atividade
         </button>
@@ -1996,21 +2170,184 @@
       }, 3000);
     }
 
+    let filterSearch = '';
+    let filterStatus = 'ALL';
+    let filterAssignee = 'ALL';
+    let filterPillar = 'ALL';
+    let filterMonth = 'ALL';
+    let filterDate = '';
+    let filterExtra = 'ALL';
+
+    function toggleFunnelPanel(event) {
+      event.stopPropagation();
+      const panel = document.getElementById('funnel-filter-panel');
+      if (!panel) return;
+      panel.classList.toggle('hidden');
+    }
+
     function populateFilterDropdowns() {
-      const solutions = [...new Set(tasks.map(t => t.solution))];
-      const allPillars = [...new Set(tasks.map(t => t.pillar))];
+      const solutions = [...new Set(tasks.map(t => t.solution).filter(Boolean))];
+      const allPillars = [...new Set(tasks.map(t => t.pillar).filter(Boolean))];
       document.getElementById('solutions-datalist').innerHTML = solutions.map(s => `<option value="${s}">`).join('');
       document.getElementById('pillars-datalist').innerHTML = allPillars.map(p => `<option value="${p}">`).join('');
+
+      const solSelect = document.getElementById('filter-solution');
+      if (solSelect) {
+        solSelect.innerHTML = '<option value="ALL">Todas as soluções</option>' +
+          solutions.map(s => `<option value="${escapeHTML(s)}" ${selectedSolution === s ? 'selected' : ''}>${escapeHTML(s)}</option>`).join('');
+      }
+
+      const pillarSelect = document.getElementById('filter-pillar');
+      if (pillarSelect) {
+        pillarSelect.innerHTML = '<option value="ALL">Todos os pilares</option>' +
+          allPillars.map(p => `<option value="${escapeHTML(p)}" ${filterPillar === p ? 'selected' : ''}>${escapeHTML(p)}</option>`).join('');
+      }
+    }
+
+    function onSolutionSelectFilterChange(val) {
+      selectedSolution = val || 'ALL';
+      updateActiveFiltersBadge();
+      render();
     }
 
     function setSolutionFilter(sol) {
       selectedSolution = (selectedSolution === sol || sol === 'ALL') ? 'ALL' : sol;
+      const solSelect = document.getElementById('filter-solution');
+      if (solSelect) solSelect.value = selectedSolution;
+      updateActiveFiltersBadge();
       render();
+    }
+
+    function onFilterControlChange() {
+      filterSearch = (document.getElementById('filter-search').value || '').trim().toLowerCase();
+      filterStatus = document.getElementById('filter-status').value || 'ALL';
+      filterAssignee = document.getElementById('filter-assignee').value || 'ALL';
+      filterPillar = document.getElementById('filter-pillar').value || 'ALL';
+      filterMonth = document.getElementById('filter-month').value || 'ALL';
+      filterExtra = document.getElementById('filter-extra').value || 'ALL';
+      updateActiveFiltersBadge();
+      render();
+    }
+
+    function onFilterDatePicked(isoVal) {
+      const dmy = toDDMMYYYY(isoVal);
+      filterDate = dmy;
+      document.getElementById('filter-date-display').textContent = dmy || 'Todas';
+      document.getElementById('clear-filter-date-btn').classList.toggle('hidden', !dmy);
+      updateActiveFiltersBadge();
+      render();
+    }
+
+    function clearFilterDate() {
+      filterDate = '';
+      document.getElementById('filter-date-picker').value = '';
+      document.getElementById('filter-date-display').textContent = 'Todas';
+      document.getElementById('clear-filter-date-btn').classList.add('hidden');
+      updateActiveFiltersBadge();
+      render();
+    }
+
+    function resetAllFilters() {
+      selectedSolution = 'ALL';
+      filterSearch = '';
+      filterStatus = 'ALL';
+      filterAssignee = 'ALL';
+      filterPillar = 'ALL';
+      filterMonth = 'ALL';
+      filterDate = '';
+      filterExtra = 'ALL';
+
+      document.getElementById('filter-search').value = '';
+      document.getElementById('filter-status').value = 'ALL';
+      document.getElementById('filter-assignee').value = 'ALL';
+      document.getElementById('filter-solution').value = 'ALL';
+      document.getElementById('filter-pillar').value = 'ALL';
+      document.getElementById('filter-month').value = 'ALL';
+      document.getElementById('filter-date-picker').value = '';
+      document.getElementById('filter-date-display').textContent = 'Todas';
+      document.getElementById('clear-filter-date-btn').classList.add('hidden');
+      document.getElementById('filter-extra').value = 'ALL';
+
+      updateActiveFiltersBadge();
+      render();
+    }
+
+    function updateActiveFiltersBadge() {
+      let count = 0;
+      if (selectedSolution !== 'ALL') count++;
+      if (filterSearch) count++;
+      if (filterStatus !== 'ALL') count++;
+      if (filterAssignee !== 'ALL') count++;
+      if (filterPillar !== 'ALL') count++;
+      if (filterMonth !== 'ALL') count++;
+      if (filterDate) count++;
+      if (filterExtra !== 'ALL') count++;
+
+      const badge = document.getElementById('active-filters-badge');
+      const btn = document.getElementById('funnel-filter-btn');
+      if (badge) {
+        badge.textContent = count;
+        badge.classList.toggle('hidden', count === 0);
+      }
+      if (btn) {
+        if (count > 0) {
+          btn.classList.add('border-emerald-500/50');
+        } else {
+          btn.classList.remove('border-emerald-500/50');
+        }
+      }
     }
 
     function getFilteredTasks() {
       return tasks.filter(t => {
         if (selectedSolution !== 'ALL' && t.solution !== selectedSolution) return false;
+        if (filterStatus !== 'ALL' && t.status !== filterStatus) return false;
+        if (filterPillar !== 'ALL' && t.pillar !== filterPillar) return false;
+
+        if (filterAssignee !== 'ALL') {
+          const resp = (t.assignee || '').trim();
+          if (filterAssignee === 'UNASSIGNED') {
+            if (resp !== '') return false;
+          } else {
+            if (resp !== filterAssignee) return false;
+          }
+        }
+
+        const dmy = toDDMMYYYY(t.schedule);
+        if (filterMonth !== 'ALL') {
+          if (filterMonth === 'NO_DATE') {
+            if (dmy !== '') return false;
+          } else {
+            if (!dmy.endsWith(filterMonth)) return false;
+          }
+        }
+
+        if (filterDate && dmy !== filterDate) return false;
+
+        const subtasks = Array.isArray(t.subtasks) ? t.subtasks : [];
+        const comments = Array.isArray(t.comments) ? t.comments : [];
+        if (filterExtra === 'HAS_PENDING_SUBTASKS') {
+          if (!subtasks.some(s => !s.done)) return false;
+        } else if (filterExtra === 'HAS_SUBTASKS') {
+          if (subtasks.length === 0) return false;
+        } else if (filterExtra === 'HAS_COMMENTS') {
+          if (comments.length === 0) return false;
+        }
+
+        if (filterSearch) {
+          const haystack = [
+            t.activity || '',
+            t.solution || '',
+            t.pillar || '',
+            t.description || '',
+            t.assignee || '',
+            dmy,
+            ...subtasks.map(s => s.text || ''),
+            ...comments.map(c => c.text || '')
+          ].join(' ').toLowerCase();
+          if (!haystack.includes(filterSearch)) return false;
+        }
+
         return true;
       });
     }
@@ -2096,6 +2433,10 @@
       const modalMenu = document.getElementById('detail-assignee-menu');
       if (modalMenu && !modalMenu.classList.contains('hidden')) {
         modalMenu.classList.add('hidden');
+      }
+      const funnelPanel = document.getElementById('funnel-filter-panel');
+      if (funnelPanel && !funnelPanel.classList.contains('hidden')) {
+        funnelPanel.classList.add('hidden');
       }
     });
 
