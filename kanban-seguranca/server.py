@@ -31,14 +31,23 @@ def init_db():
                 schedule TEXT,
                 status TEXT NOT NULL,
                 assignee TEXT DEFAULT '',
+                description TEXT DEFAULT '',
+                subtasks TEXT DEFAULT '[]',
+                comments TEXT DEFAULT '[]',
                 updated_at REAL
             )
         """)
-        # Migrate existing table if assignee column does not exist yet
+        # Migrate existing table if new columns do not exist yet
         c.execute("PRAGMA table_info(tasks)")
         cols = [row[1] for row in c.fetchall()]
         if "assignee" not in cols:
             c.execute("ALTER TABLE tasks ADD COLUMN assignee TEXT DEFAULT ''")
+        if "description" not in cols:
+            c.execute("ALTER TABLE tasks ADD COLUMN description TEXT DEFAULT ''")
+        if "subtasks" not in cols:
+            c.execute("ALTER TABLE tasks ADD COLUMN subtasks TEXT DEFAULT '[]'")
+        if "comments" not in cols:
+            c.execute("ALTER TABLE tasks ADD COLUMN comments TEXT DEFAULT '[]'")
 
         c.execute("SELECT COUNT(*) FROM tasks")
         count = c.fetchone()[0]
@@ -48,8 +57,8 @@ def init_db():
             now = time.time()
             for t in seed_tasks:
                 c.execute("""
-                    INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, updated_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, description, subtasks, comments, updated_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     int(t["id"]),
                     t.get("solution", ""),
@@ -60,6 +69,9 @@ def init_db():
                     t.get("schedule", ""),
                     t.get("status", "todo"),
                     t.get("assignee", ""),
+                    t.get("description", ""),
+                    json.dumps(t.get("subtasks", []), ensure_ascii=False),
+                    json.dumps(t.get("comments", []), ensure_ascii=False),
                     now
                 ))
         conn.commit()
@@ -71,7 +83,7 @@ def get_all_tasks():
         conn = sqlite3.connect(DB_FILE)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        c.execute("SELECT id, solution, pillar, activity, month, all_months, schedule, status, assignee FROM tasks ORDER BY id ASC")
+        c.execute("SELECT id, solution, pillar, activity, month, all_months, schedule, status, assignee, description, subtasks, comments FROM tasks ORDER BY id ASC")
         rows = c.fetchall()
         conn.close()
         result = []
@@ -80,6 +92,14 @@ def get_all_tasks():
                 all_m = json.loads(r["all_months"]) if r["all_months"] else []
             except Exception:
                 all_m = []
+            try:
+                subtasks = json.loads(r["subtasks"]) if r["subtasks"] else []
+            except Exception:
+                subtasks = []
+            try:
+                comments = json.loads(r["comments"]) if r["comments"] else []
+            except Exception:
+                comments = []
             result.append({
                 "id": r["id"],
                 "solution": r["solution"],
@@ -89,7 +109,10 @@ def get_all_tasks():
                 "all_months": all_m,
                 "schedule": r["schedule"] or "",
                 "status": r["status"] or "todo",
-                "assignee": r["assignee"] or ""
+                "assignee": r["assignee"] or "",
+                "description": r["description"] or "",
+                "subtasks": subtasks,
+                "comments": comments
             })
         return result
 
@@ -100,10 +123,16 @@ def save_all_tasks(tasks_list):
     with db_lock:
         conn = sqlite3.connect(DB_FILE)
         c = conn.cursor()
+        keep_ids = [int(t["id"]) for t in tasks_list if "id" in t]
+        if keep_ids:
+            placeholders = ",".join("?" for _ in keep_ids)
+            c.execute(f"DELETE FROM tasks WHERE id NOT IN ({placeholders})", keep_ids)
+        else:
+            c.execute("DELETE FROM tasks")
         for t in tasks_list:
             c.execute("""
-                INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, description, subtasks, comments, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
                     solution=excluded.solution,
                     pillar=excluded.pillar,
@@ -113,6 +142,9 @@ def save_all_tasks(tasks_list):
                     schedule=excluded.schedule,
                     status=excluded.status,
                     assignee=excluded.assignee,
+                    description=excluded.description,
+                    subtasks=excluded.subtasks,
+                    comments=excluded.comments,
                     updated_at=excluded.updated_at
             """, (
                 int(t["id"]),
@@ -124,6 +156,9 @@ def save_all_tasks(tasks_list):
                 t.get("schedule", ""),
                 t.get("status", "todo"),
                 t.get("assignee", ""),
+                t.get("description", ""),
+                json.dumps(t.get("subtasks", []), ensure_ascii=False),
+                json.dumps(t.get("comments", []), ensure_ascii=False),
                 now
             ))
         conn.commit()

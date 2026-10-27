@@ -302,6 +302,141 @@
     </div>
   </div>
 
+  <!-- JANELA FLUTUANTE ESTILO TRELLO (Ao clicar em qualquer card) -->
+  <div id="trello-modal" onclick="if(event.target===this)closeTrelloModal()" class="fixed inset-0 bg-black/75 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl max-w-4xl w-full overflow-hidden shadow-2xl my-8 flex flex-col">
+
+      <!-- Barra de topo do modal -->
+      <div class="px-6 py-3.5 border-b border-[var(--border)] flex items-center justify-between bg-[var(--background)]/40">
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <span id="trello-status-dot" class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+          <span id="trello-status-label" class="text-xs font-semibold uppercase tracking-wider text-[var(--muted-foreground)]">Pendente</span>
+          <span class="text-xs text-[var(--muted-foreground)] opacity-40">•</span>
+          <span id="trello-solution-pillar-badge" class="text-xs text-[var(--muted-foreground)]"></span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="deleteActiveTrelloCard()" class="text-xs text-red-400/80 hover:text-red-400 transition" title="Excluir esta atividade">
+            Excluir atividade
+          </button>
+          <button onclick="closeTrelloModal()" class="w-7 h-7 rounded-lg flex items-center justify-center text-[var(--muted-foreground)] hover:text-[var(--foreground)] hover:bg-[var(--secondary)] transition">
+            ✕
+          </button>
+        </div>
+      </div>
+
+      <!-- Corpo dividido em 2 colunas igual ao Trello -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 min-h-[480px] max-h-[80vh] overflow-y-auto custom-scrollbar">
+
+        <!-- Coluna da Esquerda: Título, Data abaixo do título, Botão Adicionar Tarefa e Caixa de Descrição com Checkboxes -->
+        <div class="lg:col-span-7 p-6 border-b lg:border-b-0 lg:border-r border-[var(--border)] flex flex-col gap-5">
+
+          <!-- Título e Data abaixo do título -->
+          <div>
+            <input
+              id="detail-activity"
+              type="text"
+              oninput="onTrelloDetailFieldChange()"
+              class="w-full text-lg font-bold bg-transparent text-[var(--foreground)] border border-transparent hover:border-[var(--border)] focus:border-slate-500 rounded-lg px-2 py-1 -mx-2 focus:outline-none focus:bg-[var(--background)] transition"
+              placeholder="Título da atividade"
+            />
+
+            <div class="flex flex-wrap items-center gap-3 mt-2.5 text-xs text-[var(--muted-foreground)]">
+              <!-- Data / Período abaixo do título -->
+              <div class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <input
+                  id="detail-schedule"
+                  type="text"
+                  oninput="onTrelloDetailFieldChange()"
+                  class="bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs focus:outline-none focus:border-slate-500 w-52"
+                  placeholder="Data / Período"
+                />
+              </div>
+
+              <!-- Responsável fixo (clicar no nome abre lista dos 3 atores) -->
+              <div class="relative inline-flex items-center" onclick="event.stopPropagation()">
+                <button
+                  type="button"
+                  onclick="toggleModalAssigneeMenu(event)"
+                  class="inline-flex items-center gap-1.5 bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 rounded-md px-2.5 py-1 text-xs transition cursor-pointer"
+                  title="Clique para selecionar o responsável"
+                >
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                  <span id="detail-assignee-label" class="text-[var(--foreground)] font-medium">Responsável</span>
+                </button>
+                <div id="detail-assignee-menu" class="hidden absolute left-0 top-full mt-1 w-44 bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-xl py-1 z-30"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cabeçalho da Descrição + Botão Adicionar Tarefa acima da caixa de descrição -->
+          <div class="flex flex-col gap-2.5 flex-1">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2 text-xs font-semibold text-[var(--foreground)]">
+                <svg class="w-4 h-4 text-[var(--muted-foreground)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h10"/></svg>
+                <span>Descrição</span>
+              </div>
+              <button
+                onclick="addSubtaskInDescription()"
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-[var(--secondary)] text-[var(--foreground)] border border-[var(--border)] hover:border-slate-500 transition"
+              >
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                Adicionar tarefa
+              </button>
+            </div>
+
+            <!-- Caixa unificada de Descrição (onde nascem os checkboxes das tarefas + texto de descrição) -->
+            <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3.5 flex flex-col gap-3 flex-1 min-h-[240px]">
+              <!-- Lista de Checkboxes nascidos dentro da caixa de descrição -->
+              <div id="detail-subtasks-list" class="space-y-2 empty:hidden"></div>
+
+              <!-- Campo de texto livre da descrição -->
+              <textarea
+                id="detail-description"
+                oninput="onTrelloDetailFieldChange()"
+                rows="6"
+                class="w-full flex-1 bg-transparent text-xs text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none resize-none leading-relaxed"
+                placeholder="Adicione uma descrição mais detalhada..."
+              ></textarea>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Coluna da Direita: Comentários livres que podem ser publicados -->
+        <div class="lg:col-span-5 p-6 bg-[var(--background)]/30 flex flex-col gap-4">
+          <div class="flex items-center gap-2 text-xs font-semibold text-[var(--foreground)]">
+            <svg class="w-4 h-4 text-[var(--muted-foreground)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+            <span>Comentários e atividade</span>
+          </div>
+
+          <!-- Caixa para escrever e publicar comentário -->
+          <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3 flex flex-col gap-2.5">
+            <textarea
+              id="new-comment-input"
+              rows="3"
+              onkeydown="if(event.key==='Enter' && (event.ctrlKey || event.metaKey)) publishComment()"
+              class="w-full bg-transparent text-xs text-[var(--foreground)] placeholder-[var(--muted-foreground)] focus:outline-none resize-none leading-relaxed"
+              placeholder="Escrever um comentário..."
+            ></textarea>
+            <div class="flex items-center justify-end">
+              <button
+                onclick="publishComment()"
+                class="px-3.5 py-1.5 rounded-lg text-xs font-medium bg-[var(--secondary)] text-[var(--foreground)] border border-[var(--border)] hover:border-slate-500 transition"
+              >
+                Publicar
+              </button>
+            </div>
+          </div>
+
+          <!-- Lista de comentários publicados -->
+          <div id="detail-comments-list" class="space-y-3 overflow-y-auto custom-scrollbar flex-1 pr-1"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
   <script>
     const STORAGE_KEY = 'kanban_seguranca_informacao_v4';
 
@@ -323,7 +458,10 @@
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 2,
@@ -336,7 +474,10 @@
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 3,
@@ -349,7 +490,10 @@
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 4,
@@ -362,7 +506,10 @@
         ],
         "schedule": "Julho de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 5,
@@ -375,7 +522,10 @@
         ],
         "schedule": "Julho de 2026 (5ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 6,
@@ -388,7 +538,10 @@
         ],
         "schedule": "Julho de 2026 (5ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 7,
@@ -401,7 +554,10 @@
         ],
         "schedule": "Agosto de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 8,
@@ -414,7 +570,10 @@
         ],
         "schedule": "Julho de 2026 (5ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 9,
@@ -427,7 +586,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 10,
@@ -440,7 +602,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 11,
@@ -453,7 +618,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 12,
@@ -464,7 +632,10 @@
         "all_months": [],
         "schedule": "Sem data definida",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 13,
@@ -477,7 +648,10 @@
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 14,
@@ -490,7 +664,10 @@
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 15,
@@ -503,7 +680,10 @@
         ],
         "schedule": "Julho de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 16,
@@ -517,7 +697,10 @@
         ],
         "schedule": "Julho de 2026 (5ª Semana) • Agosto de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 17,
@@ -530,7 +713,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 18,
@@ -543,7 +729,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 19,
@@ -556,7 +745,10 @@
         ],
         "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 20,
@@ -570,7 +762,10 @@
         ],
         "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana, 2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 21,
@@ -584,7 +779,10 @@
         ],
         "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 22,
@@ -598,7 +796,10 @@
         ],
         "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 23,
@@ -611,7 +812,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 24,
@@ -624,7 +828,10 @@
         ],
         "schedule": "Outubro de 2026 (2ª Semana, 3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 25,
@@ -637,7 +844,10 @@
         ],
         "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 26,
@@ -650,7 +860,10 @@
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 27,
@@ -663,7 +876,10 @@
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 28,
@@ -676,7 +892,10 @@
         ],
         "schedule": "Julho de 2026 (4ª Semana, 5ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 29,
@@ -689,7 +908,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 30,
@@ -702,7 +924,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 31,
@@ -715,7 +940,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 32,
@@ -728,7 +956,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 33,
@@ -741,7 +972,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 34,
@@ -754,7 +988,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 35,
@@ -767,7 +1004,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 36,
@@ -780,7 +1020,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 37,
@@ -793,7 +1036,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 38,
@@ -806,7 +1052,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 39,
@@ -819,7 +1068,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 40,
@@ -832,7 +1084,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 41,
@@ -845,7 +1100,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 42,
@@ -858,7 +1116,10 @@
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
         "status": "doing",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 43,
@@ -872,7 +1133,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana) • Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 44,
@@ -885,7 +1149,10 @@
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
         "status": "doing",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 45,
@@ -898,7 +1165,10 @@
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 46,
@@ -911,7 +1181,10 @@
         ],
         "schedule": "Julho de 2026 (3ª Semana, 4ª Semana, 5ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 47,
@@ -924,7 +1197,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 48,
@@ -937,7 +1213,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 49,
@@ -950,7 +1229,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 50,
@@ -963,7 +1245,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 51,
@@ -976,7 +1261,10 @@
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 52,
@@ -989,7 +1277,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 53,
@@ -1002,7 +1293,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 54,
@@ -1015,7 +1309,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 55,
@@ -1028,7 +1325,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 56,
@@ -1041,7 +1341,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 57,
@@ -1054,7 +1357,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 58,
@@ -1067,7 +1373,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 59,
@@ -1080,7 +1389,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 60,
@@ -1093,7 +1405,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 61,
@@ -1106,7 +1421,10 @@
         ],
         "schedule": "Setembro de 2026 (4ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 62,
@@ -1119,7 +1437,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 63,
@@ -1132,7 +1453,10 @@
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 64,
@@ -1145,7 +1469,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 65,
@@ -1158,7 +1485,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 66,
@@ -1171,7 +1501,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 67,
@@ -1184,7 +1517,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 68,
@@ -1197,7 +1533,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 69,
@@ -1210,7 +1549,10 @@
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 70,
@@ -1223,7 +1565,10 @@
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 71,
@@ -1236,7 +1581,10 @@
         ],
         "schedule": "Outubro de 2026 (3ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 72,
@@ -1249,7 +1597,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 73,
@@ -1262,7 +1613,10 @@
         ],
         "schedule": "Setembro de 2026 (2ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 74,
@@ -1275,7 +1629,10 @@
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
         "status": "doing",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 75,
@@ -1288,7 +1645,10 @@
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 76,
@@ -1301,7 +1661,10 @@
         ],
         "schedule": "Outubro de 2026 (2ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 77,
@@ -1314,7 +1677,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 78,
@@ -1327,7 +1693,10 @@
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
         "status": "doing",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 79,
@@ -1340,7 +1709,10 @@
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 80,
@@ -1353,7 +1725,10 @@
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
         "status": "doing",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 81,
@@ -1366,7 +1741,10 @@
         ],
         "schedule": "Setembro de 2026 (4ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 82,
@@ -1379,7 +1757,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 83,
@@ -1392,7 +1773,10 @@
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 84,
@@ -1405,7 +1789,10 @@
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
         "status": "done",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 85,
@@ -1418,7 +1805,10 @@
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
         "status": "doing",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 86,
@@ -1431,7 +1821,10 @@
         ],
         "schedule": "Outubro de 2026 (2ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 87,
@@ -1444,7 +1837,10 @@
         ],
         "schedule": "Outubro de 2026 (2ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 88,
@@ -1457,7 +1853,10 @@
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     },
     {
         "id": 89,
@@ -1471,7 +1870,10 @@
         ],
         "schedule": "Outubro de 2026 (3ª Semana, 4ª Semana) • Novembro de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
         "status": "todo",
-        "assignee": ""
+        "assignee": "",
+        "description": "",
+        "subtasks": [],
+        "comments": []
     }
 ];
 
@@ -1479,8 +1881,10 @@
     let currentVersion = 0;
     let selectedSolution = 'ALL';
     let editingTaskId = null;
+    let activeCardId = null;
     let draggedTaskId = null;
     let saveToastTimeout = null;
+    let autoSaveDebounce = null;
 
     function cloneDefaultTasks() {
       return JSON.parse(JSON.stringify(INITIAL_TASKS));
@@ -1559,7 +1963,7 @@
                 currentVersion = data.version;
                 tasks = data.tasks;
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
-                if (draggedTaskId === null) {
+                if (draggedTaskId === null && activeCardId === null) {
                   render();
                   flashSaveIndicator('• Atualizado em tempo real');
                 }
@@ -1572,7 +1976,7 @@
       }
 
       setInterval(async () => {
-        if (draggedTaskId !== null) return;
+        if (draggedTaskId !== null || activeCardId !== null) return;
         try {
           const res = await fetch('/api/tasks', { cache: 'no-store' });
           if (res.ok) {
@@ -1686,7 +2090,19 @@
         openAssigneeMenuTaskId = null;
         render();
       }
+      const modalMenu = document.getElementById('detail-assignee-menu');
+      if (modalMenu && !modalMenu.classList.contains('hidden')) {
+        modalMenu.classList.add('hidden');
+      }
     });
+
+    function escapeHTML(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
 
     function toggleAssigneeMenu(event, id) {
       event.stopPropagation();
@@ -1709,6 +2125,9 @@
       const scheduleLabel = task.schedule || 'Sem data definida';
       const currentAssignee = task.assignee || '';
       const isMenuOpen = openAssigneeMenuTaskId === task.id;
+      const subtasks = Array.isArray(task.subtasks) ? task.subtasks : [];
+      const doneSubtasks = subtasks.filter(s => s.done).length;
+      const comments = Array.isArray(task.comments) ? task.comments : [];
 
       let accentBorder = 'border-l-2 border-l-red-500/60 hover:border-red-500/40';
       let statusDot = '<span class="w-2 h-2 rounded-full bg-red-500/75 shrink-0" title="Pendente"></span>';
@@ -1748,25 +2167,37 @@
           draggable="true"
           ondragstart="handleDragStart(event, ${task.id})"
           ondragend="handleDragEnd(event)"
-          ondblclick="openEditTaskModal(${task.id})"
-          class="group bg-[var(--background)] border border-[var(--border)] ${accentBorder} rounded-xl p-3.5 shadow-sm transition cursor-grab active:cursor-grabbing flex flex-col gap-2 select-none"
+          onclick="openTrelloModal(${task.id})"
+          class="group bg-[var(--background)] border border-[var(--border)] ${accentBorder} rounded-xl p-3.5 shadow-sm transition cursor-pointer active:cursor-grabbing flex flex-col gap-2 select-none"
         >
           <div class="flex items-start justify-between gap-2">
             <span class="text-xs text-[var(--muted-foreground)] leading-snug">
-              ${task.solution} <span class="mx-1 opacity-50">•</span> <span class="text-[var(--foreground)]/80">${task.pillar}</span>
+              ${escapeHTML(task.solution)} <span class="mx-1 opacity-50">•</span> <span class="text-[var(--foreground)]/80">${escapeHTML(task.pillar)}</span>
             </span>
             ${statusDot}
           </div>
 
           <p class="text-xs font-medium text-[var(--foreground)] leading-relaxed">
-            ${task.activity}
+            ${escapeHTML(task.activity)}
           </p>
 
           <div class="flex items-center justify-between gap-2 pt-1 mt-auto text-xs text-[var(--muted-foreground)]">
-            <span class="inline-flex items-center gap-1.5 min-w-0">
-              <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <span>${scheduleLabel}</span>
-            </span>
+            <div class="inline-flex items-center gap-2.5 min-w-0 flex-wrap">
+              <span class="inline-flex items-center gap-1.5">
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span>${escapeHTML(scheduleLabel)}</span>
+              </span>
+              ${subtasks.length > 0 ? `
+                <span class="inline-flex items-center gap-1 text-xs ${doneSubtasks === subtasks.length ? 'text-emerald-400' : 'text-[var(--muted-foreground)]'}">
+                  ☑ ${doneSubtasks}/${subtasks.length}
+                </span>
+              ` : ''}
+              ${comments.length > 0 ? `
+                <span class="inline-flex items-center gap-1 text-xs text-[var(--muted-foreground)]">
+                  💬 ${comments.length}
+                </span>
+              ` : ''}
+            </div>
 
             <div class="relative ml-auto shrink-0" onmousedown="event.stopPropagation()" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">
               <button
@@ -1780,7 +2211,7 @@
                 title="Clique no nome para selecionar ou alterar o responsável"
               >
                 <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                <span>${currentAssignee || 'Responsável'}</span>
+                <span>${escapeHTML(currentAssignee || 'Responsável')}</span>
               </button>
               ${menuHTML}
             </div>
@@ -1945,12 +2376,240 @@
           month,
           all_months: month ? [month] : [],
           schedule,
+          description: '',
+          subtasks: [],
+          comments: [],
           status: 'todo'
         });
       }
 
       saveTasks(true);
       closeTaskModal();
+      render();
+    }
+
+    // JANELA FLUTUANTE ESTILO TRELLO (Ao clicar em qualquer card)
+    function openTrelloModal(id) {
+      const task = tasks.find(t => t.id === id);
+      if (!task) return;
+      activeCardId = id;
+
+      document.getElementById('detail-activity').value = task.activity || '';
+      document.getElementById('detail-schedule').value = task.schedule || '';
+      document.getElementById('detail-description').value = task.description || '';
+      document.getElementById('new-comment-input').value = '';
+      document.getElementById('trello-solution-pillar-badge').textContent = `${task.solution || ''} • ${task.pillar || ''}`;
+      document.getElementById('detail-assignee-label').textContent = task.assignee || 'Responsável';
+      document.getElementById('detail-assignee-menu').classList.add('hidden');
+
+      const dot = document.getElementById('trello-status-dot');
+      const lbl = document.getElementById('trello-status-label');
+      if (task.status === 'doing') {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-yellow-400';
+        lbl.textContent = 'Em Andamento';
+      } else if (task.status === 'done') {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
+        lbl.textContent = 'Concluído';
+      } else {
+        dot.className = 'w-2.5 h-2.5 rounded-full bg-red-500';
+        lbl.textContent = 'Pendente';
+      }
+
+      renderDetailSubtasks(task);
+      renderDetailComments(task);
+
+      const modal = document.getElementById('trello-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeTrelloModal() {
+      activeCardId = null;
+      const modal = document.getElementById('trello-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      render();
+    }
+
+    function toggleModalAssigneeMenu(event) {
+      event.stopPropagation();
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task) return;
+      const menu = document.getElementById('detail-assignee-menu');
+      if (!menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        return;
+      }
+      const currentAssignee = task.assignee || '';
+      menu.innerHTML = FIXED_ASSIGNEES.map(name => `
+        <button
+          type="button"
+          onclick="selectModalAssignee(event, '${name}')"
+          class="w-full text-left px-3 py-1.5 text-xs flex items-center justify-between transition hover:bg-[var(--secondary)] cursor-pointer ${
+            currentAssignee === name ? 'text-emerald-400 font-medium bg-[var(--secondary)]/60' : 'text-[var(--foreground)]'
+          }"
+        >
+          <span>${name}</span>
+          ${currentAssignee === name ? '<svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' : ''}
+        </button>
+      `).join('');
+      menu.classList.remove('hidden');
+    }
+
+    function selectModalAssignee(event, name) {
+      event.stopPropagation();
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task) return;
+      task.assignee = name;
+      document.getElementById('detail-assignee-label').textContent = name;
+      document.getElementById('detail-assignee-menu').classList.add('hidden');
+      saveTasks(true);
+      render();
+    }
+
+    function onTrelloDetailFieldChange() {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task) return;
+      task.activity = document.getElementById('detail-activity').value;
+      task.schedule = document.getElementById('detail-schedule').value;
+      task.description = document.getElementById('detail-description').value;
+
+      if (autoSaveDebounce) clearTimeout(autoSaveDebounce);
+      autoSaveDebounce = setTimeout(() => {
+        saveTasks(true);
+        render();
+      }, 400);
+    }
+
+    function renderDetailSubtasks(task) {
+      const container = document.getElementById('detail-subtasks-list');
+      const subtasks = Array.isArray(task.subtasks) ? task.subtasks : [];
+      container.innerHTML = subtasks.map((st, idx) => `
+        <div class="flex items-center gap-2.5 bg-[var(--card)]/70 border border-[var(--border)] rounded-lg px-3 py-2">
+          <input
+            type="checkbox"
+            ${st.done ? 'checked' : ''}
+            onchange="toggleSubtask(${idx}, this.checked)"
+            class="w-4 h-4 rounded accent-emerald-500 cursor-pointer shrink-0"
+          />
+          <input
+            type="text"
+            value="${escapeHTML(st.text)}"
+            oninput="updateSubtaskText(${idx}, this.value)"
+            placeholder="Descreva a tarefa..."
+            class="subtask-input flex-1 bg-transparent text-xs focus:outline-none ${st.done ? 'line-through text-[var(--muted-foreground)]' : 'text-[var(--foreground)]'}"
+          />
+          <button onclick="removeSubtask(${idx})" class="text-xs text-[var(--muted-foreground)] hover:text-red-400 px-1" title="Remover tarefa">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function addSubtaskInDescription() {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task) return;
+      if (!Array.isArray(task.subtasks)) task.subtasks = [];
+      task.subtasks.push({ text: '', done: false });
+      saveTasks(true);
+      renderDetailSubtasks(task);
+      render();
+      const inputs = document.querySelectorAll('#detail-subtasks-list .subtask-input');
+      if (inputs.length > 0) inputs[inputs.length - 1].focus();
+    }
+
+    function toggleSubtask(idx, checked) {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || !task.subtasks[idx]) return;
+      task.subtasks[idx].done = checked;
+      saveTasks(true);
+      renderDetailSubtasks(task);
+      render();
+    }
+
+    function updateSubtaskText(idx, val) {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || !task.subtasks[idx]) return;
+      task.subtasks[idx].text = val;
+      if (autoSaveDebounce) clearTimeout(autoSaveDebounce);
+      autoSaveDebounce = setTimeout(() => {
+        saveTasks(true);
+      }, 400);
+    }
+
+    function removeSubtask(idx) {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || !Array.isArray(task.subtasks)) return;
+      task.subtasks.splice(idx, 1);
+      saveTasks(true);
+      renderDetailSubtasks(task);
+      render();
+    }
+
+    function renderDetailComments(task) {
+      const container = document.getElementById('detail-comments-list');
+      const comments = Array.isArray(task.comments) ? task.comments : [];
+      if (comments.length === 0) {
+        container.innerHTML = '<p class="text-xs text-[var(--muted-foreground)] text-center py-6">Nenhum comentário publicado ainda.</p>';
+        return;
+      }
+      container.innerHTML = comments.map((c, idx) => `
+        <div class="bg-[var(--background)] border border-[var(--border)] rounded-xl p-3 flex flex-col gap-1.5">
+          <div class="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+            <span class="font-medium text-[var(--foreground)]/90">${escapeHTML(c.createdAt)}</span>
+            <button onclick="removeComment(${idx})" class="hover:text-red-400 transition" title="Excluir comentário">✕</button>
+          </div>
+          <p class="text-xs text-[var(--foreground)] whitespace-pre-wrap leading-relaxed">${escapeHTML(c.text)}</p>
+        </div>
+      `).join('');
+    }
+
+    function publishComment() {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task) return;
+      const input = document.getElementById('new-comment-input');
+      const text = input.value.trim();
+      if (!text) return;
+
+      if (!Array.isArray(task.comments)) task.comments = [];
+      const now = new Date();
+      const createdAt = now.toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      task.comments.unshift({ text, createdAt });
+      input.value = '';
+      saveTasks(true);
+      renderDetailComments(task);
+      render();
+    }
+
+    function removeComment(idx) {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || !Array.isArray(task.comments)) return;
+      task.comments.splice(idx, 1);
+      saveTasks(true);
+      renderDetailComments(task);
+      render();
+    }
+
+    function deleteActiveTrelloCard() {
+      if (activeCardId === null) return;
+      if (!confirm('Deseja excluir esta atividade?')) return;
+      tasks = tasks.filter(t => t.id !== activeCardId);
+      saveTasks(true);
+      closeTrelloModal();
       render();
     }
 
