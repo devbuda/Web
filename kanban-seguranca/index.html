@@ -1679,18 +1679,36 @@
       }).join('');
     }
 
-    function setTaskAssignee(id, assignee) {
-      const task = tasks.find(t => t.id === id);
-      if (task && task.assignee !== assignee) {
-        task.assignee = assignee;
-        saveTasks(true);
+    let openAssigneeMenuTaskId = null;
+
+    document.addEventListener('click', () => {
+      if (openAssigneeMenuTaskId !== null) {
+        openAssigneeMenuTaskId = null;
         render();
       }
+    });
+
+    function toggleAssigneeMenu(event, id) {
+      event.stopPropagation();
+      openAssigneeMenuTaskId = (openAssigneeMenuTaskId === id) ? null : id;
+      render();
+    }
+
+    function selectTaskAssignee(event, id, assignee) {
+      event.stopPropagation();
+      openAssigneeMenuTaskId = null;
+      const task = tasks.find(t => t.id === id);
+      if (task) {
+        task.assignee = assignee;
+        saveTasks(true);
+      }
+      render();
     }
 
     function createCardHTML(task) {
       const scheduleLabel = task.schedule || 'Sem data definida';
       const currentAssignee = task.assignee || '';
+      const isMenuOpen = openAssigneeMenuTaskId === task.id;
 
       let accentBorder = 'border-l-2 border-l-red-500/60 hover:border-red-500/40';
       let statusDot = '<span class="w-2 h-2 rounded-full bg-red-500/75 shrink-0" title="Pendente"></span>';
@@ -1703,9 +1721,27 @@
         statusDot = '<span class="w-2 h-2 rounded-full bg-emerald-500/75 shrink-0" title="Concluído"></span>';
       }
 
-      const optionsHTML = ['<option value="">Responsável...</option>']
-        .concat(FIXED_ASSIGNEES.map(name => `<option value="${name}" ${currentAssignee === name ? 'selected' : ''}>${name}</option>`))
-        .join('');
+      const menuHTML = isMenuOpen ? `
+        <div
+          class="absolute right-0 bottom-full mb-1.5 w-44 bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-xl py-1 z-30"
+          onmousedown="event.stopPropagation()"
+          onclick="event.stopPropagation()"
+          ondblclick="event.stopPropagation()"
+        >
+          ${FIXED_ASSIGNEES.map(name => `
+            <button
+              type="button"
+              onclick="selectTaskAssignee(event, ${task.id}, '${name}')"
+              class="w-full text-left px-3 py-1.5 text-xs flex items-center justify-between transition hover:bg-[var(--secondary)] cursor-pointer ${
+                currentAssignee === name ? 'text-emerald-400 font-medium bg-[var(--secondary)]/60' : 'text-[var(--foreground)]'
+              }"
+            >
+              <span>${name}</span>
+              ${currentAssignee === name ? '<svg class="w-3.5 h-3.5 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>' : ''}
+            </button>
+          `).join('')}
+        </div>
+      ` : '';
 
       return `
         <div
@@ -1726,22 +1762,27 @@
             ${task.activity}
           </p>
 
-          <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-[var(--muted-foreground)]">
-            <span class="inline-flex items-center gap-1.5">
+          <div class="flex items-center justify-between gap-2 pt-1 mt-auto text-xs text-[var(--muted-foreground)]">
+            <span class="inline-flex items-center gap-1.5 min-w-0">
               <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               <span>${scheduleLabel}</span>
             </span>
 
-            <div class="inline-flex items-center gap-1.5" onmousedown="event.stopPropagation()" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">
-              <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-              <select
-                onchange="setTaskAssignee(${task.id}, this.value)"
-                class="bg-[var(--card)] text-xs rounded-md px-2 py-0.5 border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer transition ${
-                  currentAssignee ? 'text-[var(--foreground)] font-medium' : 'text-[var(--muted-foreground)]'
+            <div class="relative ml-auto shrink-0" onmousedown="event.stopPropagation()" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">
+              <button
+                type="button"
+                onclick="toggleAssigneeMenu(event, ${task.id})"
+                class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md transition cursor-pointer ${
+                  currentAssignee
+                    ? 'text-[var(--foreground)] font-medium hover:bg-[var(--secondary)]'
+                    : 'text-[var(--muted-foreground)]/75 hover:text-[var(--foreground)] hover:bg-[var(--secondary)]'
                 }"
+                title="Clique no nome para selecionar ou alterar o responsável"
               >
-                ${optionsHTML}
-              </select>
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                <span>${currentAssignee || 'Responsável'}</span>
+              </button>
+              ${menuHTML}
             </div>
           </div>
         </div>
