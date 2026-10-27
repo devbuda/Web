@@ -28,9 +28,15 @@ def init_db():
                 subtasks TEXT,
                 comments TEXT,
                 status TEXT NOT NULL,
+                assignee TEXT DEFAULT 'Victor Freire',
                 updated_at REAL
             )
         """)
+        c.execute("PRAGMA table_info(tasks)")
+        cols = [row[1] for row in c.fetchall()]
+        if "assignee" not in cols:
+            c.execute("ALTER TABLE tasks ADD COLUMN assignee TEXT DEFAULT 'Victor Freire'")
+        c.execute("UPDATE tasks SET assignee = 'Victor Freire' WHERE assignee IS NULL OR TRIM(assignee) = ''")
         conn.commit()
         conn.close()
 
@@ -40,7 +46,7 @@ def get_all_tasks():
         conn = sqlite3.connect(DB_FILE)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        c.execute("SELECT id, title, date_label, description, subtasks, comments, status FROM tasks ORDER BY id ASC")
+        c.execute("SELECT id, title, date_label, description, subtasks, comments, status, assignee FROM tasks ORDER BY id ASC")
         rows = c.fetchall()
         conn.close()
         result = []
@@ -60,7 +66,8 @@ def get_all_tasks():
                 "description": r["description"] or "",
                 "subtasks": subtasks,
                 "comments": comments,
-                "status": r["status"] or "todo"
+                "status": r["status"] or "todo",
+                "assignee": (r["assignee"] or "Victor Freire").strip() or "Victor Freire"
             })
         return result
 
@@ -80,8 +87,8 @@ def save_all_tasks(tasks_list):
 
         for t in tasks_list:
             c.execute("""
-                INSERT INTO tasks (id, title, date_label, description, subtasks, comments, status, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO tasks (id, title, date_label, description, subtasks, comments, status, assignee, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
                     title=excluded.title,
                     date_label=excluded.date_label,
@@ -89,6 +96,7 @@ def save_all_tasks(tasks_list):
                     subtasks=excluded.subtasks,
                     comments=excluded.comments,
                     status=excluded.status,
+                    assignee=excluded.assignee,
                     updated_at=excluded.updated_at
             """, (
                 int(t["id"]),
@@ -98,6 +106,7 @@ def save_all_tasks(tasks_list):
                 json.dumps(t.get("subtasks", []), ensure_ascii=False),
                 json.dumps(t.get("comments", []), ensure_ascii=False),
                 t.get("status", "todo"),
+                (t.get("assignee") or "Victor Freire").strip() or "Victor Freire",
                 now
             ))
         conn.commit()
