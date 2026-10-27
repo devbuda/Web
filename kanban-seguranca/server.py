@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
 import sqlite3
 import threading
 import time
@@ -14,6 +15,35 @@ PORT = int(os.environ.get("PORT", "8080"))
 db_lock = threading.Lock()
 state_cond = threading.Condition()
 state_version = int(time.time() * 1000)
+
+MONTH_MAP = {
+    "janeiro": "01", "fevereiro": "02", "março": "03", "marco": "03",
+    "abril": "04", "maio": "05", "junho": "06", "julho": "07",
+    "agosto": "08", "setembro": "09", "outubro": "10", "novembro": "11", "dezembro": "12"
+}
+WEEK_DAY = {"1": "07", "2": "14", "3": "21", "4": "28", "5": "31"}
+
+
+def normalize_schedule_ddmmyyyy(sched):
+    if not sched or sched == "Sem data definida":
+        return ""
+    s = str(sched).strip()
+    if re.match(r"^\d{2}/\d{2}/\d{4}$", s):
+        return s
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", s):
+        y, m, d = s.split("-")
+        return f"{d}/{m}/{y}"
+    parts = [p.strip() for p in s.split("•")]
+    last = parts[-1]
+    m_match = re.match(r"^([A-Za-zçÇ]+)\s+de\s+(\d{4})", last)
+    if not m_match:
+        return ""
+    m_name = m_match.group(1).lower()
+    year = m_match.group(2)
+    month = MONTH_MAP.get(m_name, "10")
+    weeks = re.findall(r"(\d)ª\s*Semana", last)
+    day = WEEK_DAY.get(weeks[-1], "15") if weeks else "15"
+    return f"{day}/{month}/{year}"
 
 
 def init_db():
@@ -66,7 +96,7 @@ def init_db():
                     t.get("activity", ""),
                     t.get("month", ""),
                     json.dumps(t.get("all_months", []), ensure_ascii=False),
-                    t.get("schedule", ""),
+                    normalize_schedule_ddmmyyyy(t.get("schedule", "")),
                     t.get("status", "todo"),
                     t.get("assignee", ""),
                     t.get("description", ""),
@@ -74,6 +104,13 @@ def init_db():
                     json.dumps(t.get("comments", []), ensure_ascii=False),
                     now
                 ))
+        else:
+            # Migrate any existing free-text schedules in DB to DD/MM/AAAA
+            c.execute("SELECT id, schedule FROM tasks")
+            for row_id, row_sched in c.fetchall():
+                new_sched = normalize_schedule_ddmmyyyy(row_sched or "")
+                if new_sched != (row_sched or ""):
+                    c.execute("UPDATE tasks SET schedule = ? WHERE id = ?", (new_sched, row_id))
         conn.commit()
         conn.close()
 

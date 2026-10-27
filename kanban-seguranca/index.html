@@ -277,21 +277,20 @@
             <option value="Gilvandro Almeida">Gilvandro Almeida</option>
           </select>
         </div>
-        <div class="grid grid-cols-2 gap-2.5">
-          <div>
-            <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Mês Principal</label>
-            <select id="modal-month" class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)]">
-              <option value="">Sem mês definido</option>
-              <option value="JULHO/2026">Julho de 2026</option>
-              <option value="AGOSTO/2026">Agosto de 2026</option>
-              <option value="SETEMBRO/2026">Setembro de 2026</option>
-              <option value="OUTUBRO/2026">Outubro de 2026</option>
-              <option value="NOVEMBRO/2026">Novembro de 2026</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Período / Semanas</label>
-            <input id="modal-schedule" type="text" class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)]" placeholder="Outubro de 2026 (1ª Semana)" />
+        <div>
+          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Data (DD/MM/AAAA)</label>
+          <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('modal-schedule-picker')">
+            <div class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
+              <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <span id="modal-schedule-display">DD/MM/AAAA</span>
+            </div>
+            <input
+              id="modal-schedule-picker"
+              type="date"
+              onchange="onNewModalDatePicked(this.value)"
+              onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+              class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+            />
           </div>
         </div>
       </div>
@@ -341,15 +340,19 @@
             />
 
             <div class="flex flex-wrap items-center gap-3 mt-2.5 text-xs text-[var(--muted-foreground)]">
-              <!-- Data / Período abaixo do título -->
-              <div class="inline-flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <!-- Data abaixo do título (Clicar no ícone do calendário ou na caixa abre o calendário e exibe DD/MM/AAAA) -->
+              <div class="relative inline-flex items-center cursor-pointer" onclick="triggerDateInput('detail-schedule')">
+                <div class="inline-flex items-center gap-2 bg-[var(--background)] hover:border-slate-500 text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs transition">
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span id="detail-schedule-display" class="font-medium">DD/MM/AAAA</span>
+                </div>
                 <input
                   id="detail-schedule"
-                  type="text"
-                  oninput="onTrelloDetailFieldChange()"
-                  class="bg-[var(--background)] text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs focus:outline-none focus:border-slate-500 w-52"
-                  placeholder="Data / Período"
+                  type="date"
+                  onchange="onTrelloDatePicked(this.value)"
+                  onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                  class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                  title="Clique para selecionar a data no calendário"
                 />
               </div>
 
@@ -456,7 +459,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (2ª Semana)",
+        "schedule": "14/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -472,7 +475,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (3ª Semana)",
+        "schedule": "21/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -488,7 +491,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (3ª Semana)",
+        "schedule": "21/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -504,7 +507,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (4ª Semana)",
+        "schedule": "28/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -520,7 +523,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (5ª Semana)",
+        "schedule": "31/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -536,7 +539,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (5ª Semana)",
+        "schedule": "31/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -552,7 +555,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (1ª Semana)",
+        "schedule": "07/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -568,7 +571,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (5ª Semana)",
+        "schedule": "31/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -584,7 +587,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -600,7 +603,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -616,7 +619,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -630,7 +633,7 @@
         "activity": "Operação assistida e entrega documental",
         "month": "",
         "all_months": [],
-        "schedule": "Sem data definida",
+        "schedule": "",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -646,7 +649,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (2ª Semana)",
+        "schedule": "14/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -662,7 +665,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (3ª Semana)",
+        "schedule": "21/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -678,7 +681,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (4ª Semana)",
+        "schedule": "28/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -695,7 +698,7 @@
             "JULHO/2026",
             "AGOSTO/2026"
         ],
-        "schedule": "Julho de 2026 (5ª Semana) • Agosto de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -711,7 +714,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -727,7 +730,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -743,7 +746,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
+        "schedule": "21/10/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -760,7 +763,7 @@
             "SETEMBRO/2026",
             "OUTUBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana, 2ª Semana)",
+        "schedule": "14/10/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -777,7 +780,7 @@
             "SETEMBRO/2026",
             "OUTUBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
+        "schedule": "07/10/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -794,7 +797,7 @@
             "SETEMBRO/2026",
             "OUTUBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
+        "schedule": "07/10/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -810,7 +813,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -826,7 +829,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (2ª Semana, 3ª Semana)",
+        "schedule": "21/10/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -842,7 +845,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
+        "schedule": "21/10/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -858,7 +861,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (2ª Semana)",
+        "schedule": "14/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -874,7 +877,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (3ª Semana)",
+        "schedule": "21/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -890,7 +893,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (4ª Semana, 5ª Semana)",
+        "schedule": "31/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -906,7 +909,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -922,7 +925,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -938,7 +941,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -954,7 +957,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -970,7 +973,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -986,7 +989,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1002,7 +1005,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1018,7 +1021,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1034,7 +1037,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1050,7 +1053,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1066,7 +1069,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1082,7 +1085,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1098,7 +1101,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1114,7 +1117,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "doing",
         "assignee": "",
         "description": "",
@@ -1131,7 +1134,7 @@
             "AGOSTO/2026",
             "SETEMBRO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana) • Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1147,7 +1150,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "doing",
         "assignee": "",
         "description": "",
@@ -1163,7 +1166,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (2ª Semana)",
+        "schedule": "14/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1179,7 +1182,7 @@
         "all_months": [
             "JULHO/2026"
         ],
-        "schedule": "Julho de 2026 (3ª Semana, 4ª Semana, 5ª Semana)",
+        "schedule": "31/07/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1195,7 +1198,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1211,7 +1214,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1227,7 +1230,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1243,7 +1246,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1259,7 +1262,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (2ª Semana)",
+        "schedule": "14/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1275,7 +1278,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1291,7 +1294,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1307,7 +1310,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1323,7 +1326,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1339,7 +1342,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1355,7 +1358,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1371,7 +1374,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1387,7 +1390,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1403,7 +1406,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1419,7 +1422,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1435,7 +1438,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1451,7 +1454,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1467,7 +1470,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1483,7 +1486,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1499,7 +1502,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1515,7 +1518,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1531,7 +1534,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1547,7 +1550,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (3ª Semana)",
+        "schedule": "21/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1563,7 +1566,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (1ª Semana)",
+        "schedule": "07/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1579,7 +1582,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (3ª Semana)",
+        "schedule": "21/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1595,7 +1598,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1611,7 +1614,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (2ª Semana)",
+        "schedule": "14/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1627,7 +1630,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "doing",
         "assignee": "",
         "description": "",
@@ -1643,7 +1646,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (1ª Semana)",
+        "schedule": "07/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1659,7 +1662,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (2ª Semana)",
+        "schedule": "14/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1675,7 +1678,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1691,7 +1694,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "doing",
         "assignee": "",
         "description": "",
@@ -1707,7 +1710,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (1ª Semana)",
+        "schedule": "07/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1723,7 +1726,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "doing",
         "assignee": "",
         "description": "",
@@ -1739,7 +1742,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1755,7 +1758,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1771,7 +1774,7 @@
         "all_months": [
             "AGOSTO/2026"
         ],
-        "schedule": "Agosto de 2026 (4ª Semana)",
+        "schedule": "28/08/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1787,7 +1790,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (1ª Semana)",
+        "schedule": "07/09/2026",
         "status": "done",
         "assignee": "",
         "description": "",
@@ -1803,7 +1806,7 @@
         "all_months": [
             "SETEMBRO/2026"
         ],
-        "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
+        "schedule": "28/09/2026",
         "status": "doing",
         "assignee": "",
         "description": "",
@@ -1819,7 +1822,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (2ª Semana)",
+        "schedule": "14/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1835,7 +1838,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (2ª Semana)",
+        "schedule": "14/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1851,7 +1854,7 @@
         "all_months": [
             "OUTUBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (1ª Semana)",
+        "schedule": "07/10/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -1868,7 +1871,7 @@
             "OUTUBRO/2026",
             "NOVEMBRO/2026"
         ],
-        "schedule": "Outubro de 2026 (3ª Semana, 4ª Semana) • Novembro de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
+        "schedule": "28/11/2026",
         "status": "todo",
         "assignee": "",
         "description": "",
@@ -2104,6 +2107,57 @@
         .replace(/"/g, '&quot;');
     }
 
+    const PT_MONTH_MAP = {
+      'janeiro': '01', 'fevereiro': '02', 'março': '03', 'marco': '03',
+      'abril': '04', 'maio': '05', 'junho': '06', 'julho': '07',
+      'agosto': '08', 'setembro': '09', 'outubro': '10', 'novembro': '11', 'dezembro': '12'
+    };
+    const PT_WEEK_DAY = { '1': '07', '2': '14', '3': '21', '4': '28', '5': '31' };
+
+    function toDDMMYYYY(val) {
+      if (!val || val === 'Sem data definida') return '';
+      const s = String(val).trim();
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(s)) return s;
+      if (/^\d{4}-\d{2}-\d{2}$/.test(s)) {
+        const [y, m, d] = s.split('-');
+        return `${d}/${m}/${y}`;
+      }
+      const parts = s.split('•').map(p => p.trim());
+      const last = parts[parts.length - 1];
+      const mMatch = last.match(/^([A-Za-zçÇ]+)\s+de\s+(\d{4})/);
+      if (!mMatch) return '';
+      const month = PT_MONTH_MAP[mMatch[1].toLowerCase()] || '10';
+      const year = mMatch[2];
+      const weeks = [...last.matchAll(/(\d)ª\s*Semana/g)].map(w => w[1]);
+      const day = weeks.length ? (PT_WEEK_DAY[weeks[weeks.length - 1]] || '15') : '15';
+      return `${day}/${month}/${year}`;
+    }
+
+    function toISODate(val) {
+      const dmy = toDDMMYYYY(val);
+      if (!dmy) return '';
+      const [d, m, y] = dmy.split('/');
+      return `${y}-${m}-${d}`;
+    }
+
+    function triggerDateInput(inputId) {
+      const inp = document.getElementById(inputId);
+      if (!inp) return;
+      if (typeof inp.showPicker === 'function') {
+        try { inp.showPicker(); return; } catch (e) {}
+      }
+      inp.focus();
+      inp.click();
+    }
+
+    function onCardDatePicked(id, isoVal) {
+      const task = tasks.find(t => t.id === id);
+      if (!task) return;
+      task.schedule = toDDMMYYYY(isoVal);
+      saveTasks(true);
+      render();
+    }
+
     function toggleAssigneeMenu(event, id) {
       event.stopPropagation();
       openAssigneeMenuTaskId = (openAssigneeMenuTaskId === id) ? null : id;
@@ -2122,7 +2176,8 @@
     }
 
     function createCardHTML(task) {
-      const scheduleLabel = task.schedule || 'Sem data definida';
+      const formattedDate = toDDMMYYYY(task.schedule) || 'DD/MM/AAAA';
+      const isoDate = toISODate(task.schedule);
       const currentAssignee = task.assignee || '';
       const isMenuOpen = openAssigneeMenuTaskId === task.id;
       const subtasks = Array.isArray(task.subtasks) ? task.subtasks : [];
@@ -2183,10 +2238,23 @@
 
           <div class="flex items-center justify-between gap-2 pt-1 mt-auto text-xs text-[var(--muted-foreground)]">
             <div class="inline-flex items-center gap-2.5 min-w-0 flex-wrap">
-              <span class="inline-flex items-center gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                <span>${escapeHTML(scheduleLabel)}</span>
-              </span>
+              <div
+                class="relative inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md hover:bg-[var(--secondary)] hover:text-[var(--foreground)] transition cursor-pointer"
+                onmousedown="event.stopPropagation()"
+                onclick="event.stopPropagation(); triggerDateInput('card-date-${task.id}')"
+                title="Clique no calendário para selecionar a data (DD/MM/AAAA)"
+              >
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span>${escapeHTML(formattedDate)}</span>
+                <input
+                  id="card-date-${task.id}"
+                  type="date"
+                  value="${isoDate}"
+                  onchange="onCardDatePicked(${task.id}, this.value)"
+                  onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                  class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                />
+              </div>
               ${subtasks.length > 0 ? `
                 <span class="inline-flex items-center gap-1 text-xs ${doneSubtasks === subtasks.length ? 'text-emerald-400' : 'text-[var(--muted-foreground)]'}">
                   ☑ ${doneSubtasks}/${subtasks.length}
@@ -2303,6 +2371,11 @@
     }
 
     // Modal Nova / Editar Atividade
+    function onNewModalDatePicked(isoVal) {
+      const dmy = toDDMMYYYY(isoVal);
+      document.getElementById('modal-schedule-display').textContent = dmy || 'DD/MM/AAAA';
+    }
+
     function openNewTaskModal() {
       editingTaskId = null;
       document.getElementById('modal-title').textContent = 'Nova Atividade';
@@ -2312,27 +2385,16 @@
       document.getElementById('modal-pillar').value = '';
       document.getElementById('modal-activity').value = '';
       document.getElementById('modal-assignee').value = '';
-      document.getElementById('modal-month').value = 'OUTUBRO/2026';
-      document.getElementById('modal-schedule').value = 'Outubro de 2026 (4ª Semana)';
+      const todayIso = new Date().toISOString().split('T')[0];
+      document.getElementById('modal-schedule-picker').value = todayIso;
+      document.getElementById('modal-schedule-display').textContent = toDDMMYYYY(todayIso);
       const modal = document.getElementById('task-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
     }
 
     function openEditTaskModal(id) {
-      const task = tasks.find(t => t.id === id);
-      if (!task) return;
-      editingTaskId = id;
-      document.getElementById('modal-title').textContent = 'Editar Dados da Atividade';
-      document.getElementById('modal-solution').value = task.solution;
-      document.getElementById('modal-pillar').value = task.pillar;
-      document.getElementById('modal-activity').value = task.activity;
-      document.getElementById('modal-assignee').value = task.assignee || '';
-      document.getElementById('modal-month').value = task.month || '';
-      document.getElementById('modal-schedule').value = task.schedule || '';
-      const modal = document.getElementById('task-modal');
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
+      openTrelloModal(id);
     }
 
     function closeTaskModal() {
@@ -2346,42 +2408,29 @@
       const pillar = document.getElementById('modal-pillar').value.trim() || 'Geral';
       const activity = document.getElementById('modal-activity').value.trim();
       const assignee = document.getElementById('modal-assignee').value;
-      const month = document.getElementById('modal-month').value;
-      const schedule = document.getElementById('modal-schedule').value.trim() || 'Sem data definida';
+      const isoVal = document.getElementById('modal-schedule-picker').value;
+      const schedule = toDDMMYYYY(isoVal);
 
       if (!activity) {
         alert('Informe a descrição da atividade.');
         return;
       }
 
-      if (editingTaskId !== null) {
-        const task = tasks.find(t => t.id === editingTaskId);
-        if (task) {
-          task.solution = solution;
-          task.pillar = pillar;
-          task.activity = activity;
-          task.assignee = assignee;
-          task.month = month;
-          task.all_months = month ? [month] : [];
-          task.schedule = schedule;
-        }
-      } else {
-        const nextId = tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
-        tasks.push({
-          id: nextId,
-          solution,
-          pillar,
-          activity,
-          assignee,
-          month,
-          all_months: month ? [month] : [],
-          schedule,
-          description: '',
-          subtasks: [],
-          comments: [],
-          status: 'todo'
-        });
-      }
+      const nextId = tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
+      tasks.push({
+        id: nextId,
+        solution,
+        pillar,
+        activity,
+        assignee,
+        month: '',
+        all_months: [],
+        schedule,
+        description: '',
+        subtasks: [],
+        comments: [],
+        status: 'todo'
+      });
 
       saveTasks(true);
       closeTaskModal();
@@ -2394,8 +2443,12 @@
       if (!task) return;
       activeCardId = id;
 
+      const dmy = toDDMMYYYY(task.schedule);
+      const iso = toISODate(task.schedule);
+
       document.getElementById('detail-activity').value = task.activity || '';
-      document.getElementById('detail-schedule').value = task.schedule || '';
+      document.getElementById('detail-schedule').value = iso;
+      document.getElementById('detail-schedule-display').textContent = dmy || 'DD/MM/AAAA';
       document.getElementById('detail-description').value = task.description || '';
       document.getElementById('new-comment-input').value = '';
       document.getElementById('trello-solution-pillar-badge').textContent = `${task.solution || ''} • ${task.pillar || ''}`;
@@ -2421,6 +2474,17 @@
       const modal = document.getElementById('trello-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+    }
+
+    function onTrelloDatePicked(isoVal) {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task) return;
+      const dmy = toDDMMYYYY(isoVal);
+      task.schedule = dmy;
+      document.getElementById('detail-schedule-display').textContent = dmy || 'DD/MM/AAAA';
+      saveTasks(true);
+      render();
     }
 
     function closeTrelloModal() {
@@ -2474,7 +2538,6 @@
       const task = tasks.find(t => t.id === activeCardId);
       if (!task) return;
       task.activity = document.getElementById('detail-activity').value;
-      task.schedule = document.getElementById('detail-schedule').value;
       task.description = document.getElementById('detail-description').value;
 
       if (autoSaveDebounce) clearTimeout(autoSaveDebounce);

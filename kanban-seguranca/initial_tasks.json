@@ -8,8 +8,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 2,
@@ -20,8 +24,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 3,
@@ -32,8 +40,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 4,
@@ -44,8 +56,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 5,
@@ -56,8 +72,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (5ª Semana)",
-    "status": "done"
+    "schedule": "31/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 6,
@@ -68,8 +88,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (5ª Semana)",
-    "status": "done"
+    "schedule": "31/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 7,
@@ -80,8 +104,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 8,
@@ -92,8 +120,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (5ª Semana)",
-    "status": "done"
+    "schedule": "31/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 9,
@@ -104,8 +136,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 10,
@@ -116,8 +152,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 11,
@@ -128,8 +168,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 12,
@@ -138,8 +182,12 @@
     "activity": "Operação assistida e entrega documental",
     "month": "",
     "all_months": [],
-    "schedule": "Sem data definida",
-    "status": "todo"
+    "schedule": "",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 13,
@@ -150,8 +198,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 14,
@@ -162,8 +214,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 15,
@@ -174,8 +230,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 16,
@@ -187,8 +247,12 @@
       "JULHO/2026",
       "AGOSTO/2026"
     ],
-    "schedule": "Julho de 2026 (5ª Semana) • Agosto de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 17,
@@ -199,8 +263,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 18,
@@ -211,8 +279,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 19,
@@ -223,8 +295,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
-    "status": "done"
+    "schedule": "21/10/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 20,
@@ -236,8 +312,12 @@
       "SETEMBRO/2026",
       "OUTUBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana, 2ª Semana)",
-    "status": "done"
+    "schedule": "14/10/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 21,
@@ -249,8 +329,12 @@
       "SETEMBRO/2026",
       "OUTUBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/10/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 22,
@@ -262,8 +346,12 @@
       "SETEMBRO/2026",
       "OUTUBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/10/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 23,
@@ -274,8 +362,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 24,
@@ -286,8 +378,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (2ª Semana, 3ª Semana)",
-    "status": "done"
+    "schedule": "21/10/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 25,
@@ -298,8 +394,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
-    "status": "done"
+    "schedule": "21/10/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 26,
@@ -310,8 +410,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 27,
@@ -322,8 +426,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 28,
@@ -334,8 +442,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (4ª Semana, 5ª Semana)",
-    "status": "done"
+    "schedule": "31/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 29,
@@ -346,8 +458,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 30,
@@ -358,8 +474,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 31,
@@ -370,8 +490,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 32,
@@ -382,8 +506,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 33,
@@ -394,8 +522,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 34,
@@ -406,8 +538,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 35,
@@ -418,8 +554,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 36,
@@ -430,8 +570,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 37,
@@ -442,8 +586,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 38,
@@ -454,8 +602,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 39,
@@ -466,8 +618,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 40,
@@ -478,8 +634,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 41,
@@ -490,8 +650,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 42,
@@ -502,8 +666,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-    "status": "doing"
+    "schedule": "28/09/2026",
+    "status": "doing",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 43,
@@ -515,8 +683,12 @@
       "AGOSTO/2026",
       "SETEMBRO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana) • Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 44,
@@ -527,8 +699,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-    "status": "doing"
+    "schedule": "28/09/2026",
+    "status": "doing",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 45,
@@ -539,8 +715,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 46,
@@ -551,8 +731,12 @@
     "all_months": [
       "JULHO/2026"
     ],
-    "schedule": "Julho de 2026 (3ª Semana, 4ª Semana, 5ª Semana)",
-    "status": "done"
+    "schedule": "31/07/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 47,
@@ -563,8 +747,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 48,
@@ -575,8 +763,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 49,
@@ -587,8 +779,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 50,
@@ -599,8 +795,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 51,
@@ -611,8 +811,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 52,
@@ -623,8 +827,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 53,
@@ -635,8 +843,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 54,
@@ -647,8 +859,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 55,
@@ -659,8 +875,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 56,
@@ -671,8 +891,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 57,
@@ -683,8 +907,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 58,
@@ -695,8 +923,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 59,
@@ -707,8 +939,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 60,
@@ -719,8 +955,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 61,
@@ -731,8 +971,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (4ª Semana)",
-    "status": "todo"
+    "schedule": "28/09/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 62,
@@ -743,8 +987,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 63,
@@ -755,8 +1003,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-    "status": "todo"
+    "schedule": "28/09/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 64,
@@ -767,8 +1019,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 65,
@@ -779,8 +1035,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 66,
@@ -791,8 +1051,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 67,
@@ -803,8 +1067,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 68,
@@ -815,8 +1083,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 69,
@@ -827,8 +1099,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (3ª Semana)",
-    "status": "done"
+    "schedule": "21/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 70,
@@ -839,8 +1115,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (1ª Semana)",
-    "status": "todo"
+    "schedule": "07/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 71,
@@ -851,8 +1131,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (3ª Semana)",
-    "status": "todo"
+    "schedule": "21/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 72,
@@ -863,8 +1147,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 73,
@@ -875,8 +1163,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (2ª Semana)",
-    "status": "done"
+    "schedule": "14/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 74,
@@ -887,8 +1179,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-    "status": "doing"
+    "schedule": "28/09/2026",
+    "status": "doing",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 75,
@@ -899,8 +1195,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (1ª Semana)",
-    "status": "todo"
+    "schedule": "07/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 76,
@@ -911,8 +1211,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (2ª Semana)",
-    "status": "todo"
+    "schedule": "14/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 77,
@@ -923,8 +1227,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 78,
@@ -935,8 +1243,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-    "status": "doing"
+    "schedule": "28/09/2026",
+    "status": "doing",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 79,
@@ -947,8 +1259,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (1ª Semana)",
-    "status": "todo"
+    "schedule": "07/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 80,
@@ -959,8 +1275,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-    "status": "doing"
+    "schedule": "28/09/2026",
+    "status": "doing",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 81,
@@ -971,8 +1291,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (4ª Semana)",
-    "status": "todo"
+    "schedule": "28/09/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 82,
@@ -983,8 +1307,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 83,
@@ -995,8 +1323,12 @@
     "all_months": [
       "AGOSTO/2026"
     ],
-    "schedule": "Agosto de 2026 (4ª Semana)",
-    "status": "done"
+    "schedule": "28/08/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 84,
@@ -1007,8 +1339,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (1ª Semana)",
-    "status": "done"
+    "schedule": "07/09/2026",
+    "status": "done",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 85,
@@ -1019,8 +1355,12 @@
     "all_months": [
       "SETEMBRO/2026"
     ],
-    "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-    "status": "doing"
+    "schedule": "28/09/2026",
+    "status": "doing",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 86,
@@ -1031,8 +1371,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (2ª Semana)",
-    "status": "todo"
+    "schedule": "14/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 87,
@@ -1043,8 +1387,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (2ª Semana)",
-    "status": "todo"
+    "schedule": "14/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 88,
@@ -1055,8 +1403,12 @@
     "all_months": [
       "OUTUBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (1ª Semana)",
-    "status": "todo"
+    "schedule": "07/10/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   },
   {
     "id": 89,
@@ -1068,7 +1420,11 @@
       "OUTUBRO/2026",
       "NOVEMBRO/2026"
     ],
-    "schedule": "Outubro de 2026 (3ª Semana, 4ª Semana) • Novembro de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
-    "status": "todo"
+    "schedule": "28/11/2026",
+    "status": "todo",
+    "assignee": "",
+    "description": "",
+    "subtasks": [],
+    "comments": []
   }
 ]
