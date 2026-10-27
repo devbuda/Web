@@ -30,9 +30,16 @@ def init_db():
                 all_months TEXT,
                 schedule TEXT,
                 status TEXT NOT NULL,
+                assignee TEXT DEFAULT '',
                 updated_at REAL
             )
         """)
+        # Migrate existing table if assignee column does not exist yet
+        c.execute("PRAGMA table_info(tasks)")
+        cols = [row[1] for row in c.fetchall()]
+        if "assignee" not in cols:
+            c.execute("ALTER TABLE tasks ADD COLUMN assignee TEXT DEFAULT ''")
+
         c.execute("SELECT COUNT(*) FROM tasks")
         count = c.fetchone()[0]
         if count == 0 and os.path.exists(SEED_FILE):
@@ -41,8 +48,8 @@ def init_db():
             now = time.time()
             for t in seed_tasks:
                 c.execute("""
-                    INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, updated_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, updated_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     int(t["id"]),
                     t.get("solution", ""),
@@ -52,9 +59,10 @@ def init_db():
                     json.dumps(t.get("all_months", []), ensure_ascii=False),
                     t.get("schedule", ""),
                     t.get("status", "todo"),
+                    t.get("assignee", ""),
                     now
                 ))
-            conn.commit()
+        conn.commit()
         conn.close()
 
 
@@ -63,7 +71,7 @@ def get_all_tasks():
         conn = sqlite3.connect(DB_FILE)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        c.execute("SELECT id, solution, pillar, activity, month, all_months, schedule, status FROM tasks ORDER BY id ASC")
+        c.execute("SELECT id, solution, pillar, activity, month, all_months, schedule, status, assignee FROM tasks ORDER BY id ASC")
         rows = c.fetchall()
         conn.close()
         result = []
@@ -80,7 +88,8 @@ def get_all_tasks():
                 "month": r["month"] or "",
                 "all_months": all_m,
                 "schedule": r["schedule"] or "",
-                "status": r["status"] or "todo"
+                "status": r["status"] or "todo",
+                "assignee": r["assignee"] or ""
             })
         return result
 
@@ -93,8 +102,8 @@ def save_all_tasks(tasks_list):
         c = conn.cursor()
         for t in tasks_list:
             c.execute("""
-                INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
                     solution=excluded.solution,
                     pillar=excluded.pillar,
@@ -103,6 +112,7 @@ def save_all_tasks(tasks_list):
                     all_months=excluded.all_months,
                     schedule=excluded.schedule,
                     status=excluded.status,
+                    assignee=excluded.assignee,
                     updated_at=excluded.updated_at
             """, (
                 int(t["id"]),
@@ -113,6 +123,7 @@ def save_all_tasks(tasks_list):
                 json.dumps(t.get("all_months", []), ensure_ascii=False),
                 t.get("schedule", ""),
                 t.get("status", "todo"),
+                t.get("assignee", ""),
                 now
             ))
         conn.commit()

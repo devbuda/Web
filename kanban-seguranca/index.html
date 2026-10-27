@@ -268,6 +268,15 @@
           <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Descrição da Atividade</label>
           <textarea id="modal-activity" rows="3" class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)]" placeholder="Descreva a demanda..."></textarea>
         </div>
+        <div>
+          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Responsável pela Atividade</label>
+          <select id="modal-assignee" class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)]">
+            <option value="">Sem responsável definido</option>
+            <option value="Altemiro Neto">Altemiro Neto</option>
+            <option value="Victor Freire">Victor Freire</option>
+            <option value="Gilvandro Almeida">Gilvandro Almeida</option>
+          </select>
+        </div>
         <div class="grid grid-cols-2 gap-2.5">
           <div>
             <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Mês Principal</label>
@@ -294,7 +303,13 @@
   </div>
 
   <script>
-    const STORAGE_KEY = 'kanban_seguranca_informacao_v3';
+    const STORAGE_KEY = 'kanban_seguranca_informacao_v4';
+
+    const FIXED_ASSIGNEES = [
+      'Altemiro Neto',
+      'Victor Freire',
+      'Gilvandro Almeida'
+    ];
 
     const INITIAL_TASKS = [
     {
@@ -307,7 +322,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 2,
@@ -319,7 +335,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 3,
@@ -331,7 +348,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 4,
@@ -343,7 +361,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 5,
@@ -355,7 +374,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (5ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 6,
@@ -367,7 +387,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (5ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 7,
@@ -379,7 +400,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 8,
@@ -391,7 +413,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (5ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 9,
@@ -403,7 +426,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 10,
@@ -415,7 +439,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 11,
@@ -427,7 +452,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 12,
@@ -437,7 +463,8 @@
         "month": "",
         "all_months": [],
         "schedule": "Sem data definida",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 13,
@@ -449,7 +476,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 14,
@@ -461,7 +489,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 15,
@@ -473,7 +502,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 16,
@@ -486,7 +516,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Julho de 2026 (5ª Semana) • Agosto de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 17,
@@ -498,7 +529,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 18,
@@ -510,7 +542,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 19,
@@ -522,7 +555,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 20,
@@ -535,7 +569,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana, 2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 21,
@@ -548,7 +583,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 22,
@@ -561,7 +597,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Setembro de 2026 (4ª Semana) • Outubro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 23,
@@ -573,7 +610,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 24,
@@ -585,7 +623,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (2ª Semana, 3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 25,
@@ -597,7 +636,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (1ª Semana, 2ª Semana, 3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 26,
@@ -609,7 +649,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 27,
@@ -621,7 +662,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 28,
@@ -633,7 +675,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (4ª Semana, 5ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 29,
@@ -645,7 +688,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 30,
@@ -657,7 +701,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 31,
@@ -669,7 +714,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 32,
@@ -681,7 +727,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 33,
@@ -693,7 +740,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 34,
@@ -705,7 +753,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 35,
@@ -717,7 +766,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 36,
@@ -729,7 +779,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 37,
@@ -741,7 +792,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 38,
@@ -753,7 +805,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 39,
@@ -765,7 +818,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 40,
@@ -777,7 +831,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 41,
@@ -789,7 +844,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 42,
@@ -801,7 +857,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-        "status": "doing"
+        "status": "doing",
+        "assignee": ""
     },
     {
         "id": 43,
@@ -814,7 +871,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana) • Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 44,
@@ -826,7 +884,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-        "status": "doing"
+        "status": "doing",
+        "assignee": ""
     },
     {
         "id": 45,
@@ -838,7 +897,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 46,
@@ -850,7 +910,8 @@
             "JULHO/2026"
         ],
         "schedule": "Julho de 2026 (3ª Semana, 4ª Semana, 5ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 47,
@@ -862,7 +923,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 48,
@@ -874,7 +936,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 49,
@@ -886,7 +949,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 50,
@@ -898,7 +962,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 51,
@@ -910,7 +975,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 52,
@@ -922,7 +988,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 53,
@@ -934,7 +1001,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 54,
@@ -946,7 +1014,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 55,
@@ -958,7 +1027,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 56,
@@ -970,7 +1040,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 57,
@@ -982,7 +1053,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 58,
@@ -994,7 +1066,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 59,
@@ -1006,7 +1079,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 60,
@@ -1018,7 +1092,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 61,
@@ -1030,7 +1105,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (4ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 62,
@@ -1042,7 +1118,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 63,
@@ -1054,7 +1131,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 64,
@@ -1066,7 +1144,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 65,
@@ -1078,7 +1157,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 66,
@@ -1090,7 +1170,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 67,
@@ -1102,7 +1183,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 68,
@@ -1114,7 +1196,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 69,
@@ -1126,7 +1209,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (3ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 70,
@@ -1138,7 +1222,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 71,
@@ -1150,7 +1235,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (3ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 72,
@@ -1162,7 +1248,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 73,
@@ -1174,7 +1261,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (2ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 74,
@@ -1186,7 +1274,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-        "status": "doing"
+        "status": "doing",
+        "assignee": ""
     },
     {
         "id": 75,
@@ -1198,7 +1287,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 76,
@@ -1210,7 +1300,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (2ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 77,
@@ -1222,7 +1313,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 78,
@@ -1234,7 +1326,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-        "status": "doing"
+        "status": "doing",
+        "assignee": ""
     },
     {
         "id": 79,
@@ -1246,7 +1339,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 80,
@@ -1258,7 +1352,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-        "status": "doing"
+        "status": "doing",
+        "assignee": ""
     },
     {
         "id": 81,
@@ -1270,7 +1365,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (4ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 82,
@@ -1282,7 +1378,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 83,
@@ -1294,7 +1391,8 @@
             "AGOSTO/2026"
         ],
         "schedule": "Agosto de 2026 (4ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 84,
@@ -1306,7 +1404,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (1ª Semana)",
-        "status": "done"
+        "status": "done",
+        "assignee": ""
     },
     {
         "id": 85,
@@ -1318,7 +1417,8 @@
             "SETEMBRO/2026"
         ],
         "schedule": "Setembro de 2026 (3ª Semana, 4ª Semana)",
-        "status": "doing"
+        "status": "doing",
+        "assignee": ""
     },
     {
         "id": 86,
@@ -1330,7 +1430,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (2ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 87,
@@ -1342,7 +1443,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (2ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 88,
@@ -1354,7 +1456,8 @@
             "OUTUBRO/2026"
         ],
         "schedule": "Outubro de 2026 (1ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     },
     {
         "id": 89,
@@ -1367,7 +1470,8 @@
             "NOVEMBRO/2026"
         ],
         "schedule": "Outubro de 2026 (3ª Semana, 4ª Semana) • Novembro de 2026 (1ª Semana, 2ª Semana, 3ª Semana, 4ª Semana)",
-        "status": "todo"
+        "status": "todo",
+        "assignee": ""
     }
 ];
 
@@ -1467,7 +1571,6 @@
         } catch (err) {}
       }
 
-      // Polling de segurança a cada 3 segundos caso a conexão SSE oscile na rede
       setInterval(async () => {
         if (draggedTaskId !== null) return;
         try {
@@ -1576,8 +1679,18 @@
       }).join('');
     }
 
+    function setTaskAssignee(id, assignee) {
+      const task = tasks.find(t => t.id === id);
+      if (task && task.assignee !== assignee) {
+        task.assignee = assignee;
+        saveTasks(true);
+        render();
+      }
+    }
+
     function createCardHTML(task) {
       const scheduleLabel = task.schedule || 'Sem data definida';
+      const currentAssignee = task.assignee || '';
 
       let accentBorder = 'border-l-2 border-l-red-500/60 hover:border-red-500/40';
       let statusDot = '<span class="w-2 h-2 rounded-full bg-red-500/75 shrink-0" title="Pendente"></span>';
@@ -1589,6 +1702,10 @@
         accentBorder = 'border-l-2 border-l-emerald-500/60 hover:border-emerald-500/40';
         statusDot = '<span class="w-2 h-2 rounded-full bg-emerald-500/75 shrink-0" title="Concluído"></span>';
       }
+
+      const optionsHTML = ['<option value="">Responsável...</option>']
+        .concat(FIXED_ASSIGNEES.map(name => `<option value="${name}" ${currentAssignee === name ? 'selected' : ''}>${name}</option>`))
+        .join('');
 
       return `
         <div
@@ -1609,11 +1726,23 @@
             ${task.activity}
           </p>
 
-          <div class="flex items-center justify-between pt-0.5 text-xs text-[var(--muted-foreground)]">
+          <div class="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs text-[var(--muted-foreground)]">
             <span class="inline-flex items-center gap-1.5">
               <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               <span>${scheduleLabel}</span>
             </span>
+
+            <div class="inline-flex items-center gap-1.5" onmousedown="event.stopPropagation()" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">
+              <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+              <select
+                onchange="setTaskAssignee(${task.id}, this.value)"
+                class="bg-[var(--card)] text-xs rounded-md px-2 py-0.5 border border-[var(--border)] focus:outline-none focus:border-slate-500 cursor-pointer transition ${
+                  currentAssignee ? 'text-[var(--foreground)] font-medium' : 'text-[var(--muted-foreground)]'
+                }"
+              >
+                ${optionsHTML}
+              </select>
+            </div>
           </div>
         </div>
       `;
@@ -1710,6 +1839,7 @@
         : 'Política de Segurança';
       document.getElementById('modal-pillar').value = '';
       document.getElementById('modal-activity').value = '';
+      document.getElementById('modal-assignee').value = '';
       document.getElementById('modal-month').value = 'OUTUBRO/2026';
       document.getElementById('modal-schedule').value = 'Outubro de 2026 (4ª Semana)';
       const modal = document.getElementById('task-modal');
@@ -1725,6 +1855,7 @@
       document.getElementById('modal-solution').value = task.solution;
       document.getElementById('modal-pillar').value = task.pillar;
       document.getElementById('modal-activity').value = task.activity;
+      document.getElementById('modal-assignee').value = task.assignee || '';
       document.getElementById('modal-month').value = task.month || '';
       document.getElementById('modal-schedule').value = task.schedule || '';
       const modal = document.getElementById('task-modal');
@@ -1742,6 +1873,7 @@
       const solution = document.getElementById('modal-solution').value.trim() || 'Geral';
       const pillar = document.getElementById('modal-pillar').value.trim() || 'Geral';
       const activity = document.getElementById('modal-activity').value.trim();
+      const assignee = document.getElementById('modal-assignee').value;
       const month = document.getElementById('modal-month').value;
       const schedule = document.getElementById('modal-schedule').value.trim() || 'Sem data definida';
 
@@ -1756,6 +1888,7 @@
           task.solution = solution;
           task.pillar = pillar;
           task.activity = activity;
+          task.assignee = assignee;
           task.month = month;
           task.all_months = month ? [month] : [];
           task.schedule = schedule;
@@ -1767,6 +1900,7 @@
           solution,
           pillar,
           activity,
+          assignee,
           month,
           all_months: month ? [month] : [],
           schedule,
