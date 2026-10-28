@@ -386,23 +386,45 @@
             <option value="Gilvandro Almeida">Gilvandro Almeida</option>
           </select>
         </div>
-        <div>
-          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">
-            Prazo para Conclusão <span class="text-red-400 font-bold">*</span> <span class="text-[11px] opacity-80">(Obrigatório - DD/MM/AAAA)</span>
-          </label>
-          <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('new-card-date')">
-            <div id="new-card-date-box" class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
-              <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <span id="new-card-date-display" class="text-[var(--muted-foreground)]">Selecione o prazo (DD/MM/AAAA)...</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">
+              Data de Criação <span class="text-[11px] opacity-80">(DD/MM/AAAA)</span>
+            </label>
+            <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('new-card-created')">
+              <div class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span id="new-card-created-display" class="text-[var(--foreground)] font-medium">DD/MM/AAAA</span>
+              </div>
+              <input
+                id="new-card-created"
+                type="date"
+                required
+                onchange="onNewCardCreatedPicked(this.value)"
+                onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+              />
             </div>
-            <input
-              id="new-card-date"
-              type="date"
-              required
-              onchange="onNewCardDatePicked(this.value)"
-              onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
-              class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">
+              Prazo para Conclusão <span class="text-red-400 font-bold">*</span>
+            </label>
+            <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('new-card-date')">
+              <div id="new-card-date-box" class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span id="new-card-date-display" class="text-[var(--muted-foreground)] truncate">Selecione o prazo...</span>
+              </div>
+              <input
+                id="new-card-date"
+                type="date"
+                required
+                onchange="onNewCardDatePicked(this.value)"
+                onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -449,6 +471,22 @@
               placeholder="Título do card"
             />
             <div class="flex flex-wrap items-center gap-3 mt-2.5 text-xs text-[var(--muted-foreground)]">
+              <!-- Data de Criação abaixo do título (Editável em Pendente/Em Andamento; somente leitura quando Concluído) -->
+              <div id="detail-created-wrapper" class="relative inline-flex items-center cursor-pointer" onclick="onModalCreatedWrapperClick()">
+                <div id="detail-created-box" class="inline-flex items-center gap-2 bg-[var(--background)] hover:border-slate-500 text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs transition">
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span id="detail-created-display" class="font-medium">Criado: DD/MM/AAAA</span>
+                </div>
+                <input
+                  id="detail-created"
+                  type="date"
+                  onchange="onDetailCreatedPicked(this.value)"
+                  onclick="event.stopPropagation(); if(!this.disabled && this.showPicker) this.showPicker();"
+                  class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                  title="Clique para alterar a data de criação"
+                />
+              </div>
+
               <!-- Prazo abaixo do título (Editável em Pendente/Em Andamento; somente indicativo quando Concluído) -->
               <div id="detail-date-wrapper" class="relative inline-flex items-center cursor-pointer" onclick="onModalDateWrapperClick()">
                 <div id="detail-date-box" class="inline-flex items-center gap-2 bg-[var(--background)] hover:border-slate-500 text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs transition">
@@ -727,6 +765,19 @@
       inp.click();
     }
 
+    function onCardCreatedPicked(id, isoVal) {
+      const task = tasks.find(t => t.id === id);
+      if (!task || task.status === 'done') return;
+      const dmy = toDDMMYYYY(isoVal);
+      if (!dmy) {
+        render();
+        return;
+      }
+      task.created_date = dmy;
+      saveTasks(true);
+      render();
+    }
+
     function onCardDatePicked(id, isoVal) {
       const task = tasks.find(t => t.id === id);
       if (!task || task.status === 'done') return;
@@ -913,9 +964,11 @@
     }
 
     function createCardHTML(task) {
+      const formattedCreated = toDDMMYYYY(task.created_date) || '27/10/2026';
+      const isoCreated = toISODate(formattedCreated);
       const formattedDate = toDDMMYYYY(task.date) || '30/11/2026';
       const isoDate = toISODate(formattedDate);
-      const isEditableDeadline = task.status !== 'done';
+      const isEditableDates = task.status !== 'done';
       const currentAssignee = (task.assignee || DEFAULT_ASSIGNEE).trim() || DEFAULT_ASSIGNEE;
       const isMenuOpen = openAssigneeMenuTaskId === task.id;
       const subtasks = Array.isArray(task.subtasks) ? task.subtasks : [];
@@ -933,7 +986,37 @@
         statusDot = '<span class="w-2 h-2 rounded-full bg-emerald-500/75 shrink-0" title="Concluído"></span>';
       }
 
-      const deadlineHTML = isEditableDeadline ? `
+      const createdHTML = isEditableDates ? `
+        <div
+          class="relative inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md hover:bg-[var(--secondary)] hover:text-[var(--foreground)] transition cursor-pointer"
+          onmousedown="event.stopPropagation()"
+          onclick="event.stopPropagation(); triggerDateInput('card-created-${task.id}')"
+          title="Data de criação (clique para editar no calendário)"
+        >
+          <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Criado: ${escapeHTML(formattedCreated)}</span>
+          <input
+            id="card-created-${task.id}"
+            type="date"
+            value="${isoCreated}"
+            onchange="onCardCreatedPicked(${task.id}, this.value)"
+            onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+            class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+          />
+        </div>
+      ` : `
+        <div
+          class="inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 text-[var(--muted-foreground)]/80 cursor-default"
+          onmousedown="event.stopPropagation()"
+          onclick="event.stopPropagation()"
+          title="Data de criação (somente leitura em demandas concluídas)"
+        >
+          <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Criado: ${escapeHTML(formattedCreated)}</span>
+        </div>
+      `;
+
+      const deadlineHTML = isEditableDates ? `
         <div
           class="relative inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md hover:bg-[var(--secondary)] hover:text-[var(--foreground)] transition cursor-pointer"
           onmousedown="event.stopPropagation()"
@@ -954,7 +1037,9 @@
       ` : `
         <div
           class="inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 text-[var(--muted-foreground)]/80 cursor-default"
-          title="Prazo de conclusão (somente indicativo em demandas concluídas)"
+          onmousedown="event.stopPropagation()"
+          onclick="event.stopPropagation()"
+          title="Prazo de conclusão (somente leitura em demandas concluídas)"
         >
           <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
           <span>Prazo: ${escapeHTML(formattedDate)}</span>
@@ -1000,6 +1085,7 @@
 
           <div class="flex items-center justify-between gap-2 pt-1 mt-auto text-xs text-[var(--muted-foreground)]">
             <div class="inline-flex items-center gap-2.5 min-w-0 flex-wrap">
+              ${createdHTML}
               ${deadlineHTML}
 
               ${subtasks.length > 0 ? `
@@ -1114,7 +1200,15 @@
       }
     }
 
-    // Modal Nova Demanda Rápida (Prazo para Conclusão Obrigatório)
+    // Modal Nova Demanda Rápida (Data de Criação + Prazo para Conclusão Obrigatório)
+    function onNewCardCreatedPicked(isoVal) {
+      const dmy = toDDMMYYYY(isoVal);
+      const disp = document.getElementById('new-card-created-display');
+      if (dmy) {
+        disp.textContent = dmy;
+      }
+    }
+
     function onNewCardDatePicked(isoVal) {
       const dmy = toDDMMYYYY(isoVal);
       const disp = document.getElementById('new-card-date-display');
@@ -1125,7 +1219,7 @@
         disp.classList.add('text-[var(--foreground)]', 'font-medium');
         if (box) box.classList.remove('border-red-500/60');
       } else {
-        disp.textContent = 'Selecione o prazo (DD/MM/AAAA)...';
+        disp.textContent = 'Selecione o prazo...';
         disp.classList.add('text-[var(--muted-foreground)]');
         disp.classList.remove('text-[var(--foreground)]', 'font-medium');
       }
@@ -1134,9 +1228,12 @@
     function openNewCardModal() {
       document.getElementById('new-card-title').value = '';
       document.getElementById('new-card-assignee').value = DEFAULT_ASSIGNEE;
+      const todayIso = new Date().toISOString().split('T')[0];
+      document.getElementById('new-card-created').value = todayIso;
+      document.getElementById('new-card-created-display').textContent = toDDMMYYYY(todayIso);
       document.getElementById('new-card-date').value = '';
       const disp = document.getElementById('new-card-date-display');
-      disp.textContent = 'Selecione o prazo (DD/MM/AAAA)...';
+      disp.textContent = 'Selecione o prazo...';
       disp.classList.add('text-[var(--muted-foreground)]');
       disp.classList.remove('text-[var(--foreground)]', 'font-medium');
       const box = document.getElementById('new-card-date-box');
@@ -1155,6 +1252,8 @@
 
     function createNewCard() {
       const title = document.getElementById('new-card-title').value.trim();
+      const isoCreated = document.getElementById('new-card-created').value;
+      const created_date = toDDMMYYYY(isoCreated) || toDDMMYYYY(new Date().toISOString().split('T')[0]);
       const isoDate = document.getElementById('new-card-date').value;
       const date = toDDMMYYYY(isoDate);
       const assignee = document.getElementById('new-card-assignee').value || DEFAULT_ASSIGNEE;
@@ -1174,6 +1273,7 @@
       const newCard = {
         id: nextId,
         title,
+        created_date,
         date,
         assignee,
         description: '',
@@ -1188,6 +1288,13 @@
     }
 
     // JANELA FLUTUANTE ESTILO TRELLO
+    function onModalCreatedWrapperClick() {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || task.status === 'done') return;
+      triggerDateInput('detail-created');
+    }
+
     function onModalDateWrapperClick() {
       if (activeCardId === null) return;
       const task = tasks.find(t => t.id === activeCardId);
@@ -1200,19 +1307,35 @@
       if (!task) return;
       activeCardId = id;
 
+      const createdDmy = toDDMMYYYY(task.created_date) || '27/10/2026';
+      const createdIso = toISODate(createdDmy);
       const dmy = toDDMMYYYY(task.date) || '30/11/2026';
       const iso = toISODate(dmy);
-      const isEditableDeadline = task.status !== 'done';
+      const isEditableDates = task.status !== 'done';
       const currentAssignee = (task.assignee || DEFAULT_ASSIGNEE).trim() || DEFAULT_ASSIGNEE;
 
       document.getElementById('detail-title').value = task.title || '';
+
+      const createdInput = document.getElementById('detail-created');
+      const createdWrapper = document.getElementById('detail-created-wrapper');
+      const createdBox = document.getElementById('detail-created-box');
+      createdInput.value = createdIso;
+      document.getElementById('detail-created-display').textContent = `Criado: ${createdDmy}`;
+
       const dateInput = document.getElementById('detail-date');
       const dateWrapper = document.getElementById('detail-date-wrapper');
       const dateBox = document.getElementById('detail-date-box');
       dateInput.value = iso;
       document.getElementById('detail-date-display').textContent = `Prazo: ${dmy}`;
 
-      if (isEditableDeadline) {
+      if (isEditableDates) {
+        createdInput.disabled = false;
+        createdInput.classList.remove('hidden', 'pointer-events-none');
+        createdWrapper.classList.add('cursor-pointer');
+        createdWrapper.classList.remove('cursor-default', 'opacity-80');
+        createdBox.classList.add('hover:border-slate-500');
+        createdWrapper.title = 'Clique para alterar a data de criação';
+
         dateInput.disabled = false;
         dateInput.classList.remove('hidden', 'pointer-events-none');
         dateWrapper.classList.add('cursor-pointer');
@@ -1220,12 +1343,19 @@
         dateBox.classList.add('hover:border-slate-500');
         dateWrapper.title = 'Clique para alterar o prazo de conclusão';
       } else {
+        createdInput.disabled = true;
+        createdInput.classList.add('hidden', 'pointer-events-none');
+        createdWrapper.classList.remove('cursor-pointer');
+        createdWrapper.classList.add('cursor-default', 'opacity-80');
+        createdBox.classList.remove('hover:border-slate-500');
+        createdWrapper.title = 'Data de criação (somente leitura em demandas concluídas)';
+
         dateInput.disabled = true;
         dateInput.classList.add('hidden', 'pointer-events-none');
         dateWrapper.classList.remove('cursor-pointer');
         dateWrapper.classList.add('cursor-default', 'opacity-80');
         dateBox.classList.remove('hover:border-slate-500');
-        dateWrapper.title = 'Prazo de conclusão (somente indicativo em demandas concluídas)';
+        dateWrapper.title = 'Prazo de conclusão (somente leitura em demandas concluídas)';
       }
 
       document.getElementById('detail-assignee-label').textContent = currentAssignee;
@@ -1252,6 +1382,21 @@
       const modal = document.getElementById('trello-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+    }
+
+    function onDetailCreatedPicked(isoVal) {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || task.status === 'done') return;
+      const dmy = toDDMMYYYY(isoVal);
+      if (!dmy) {
+        document.getElementById('detail-created').value = toISODate(task.created_date || '27/10/2026');
+        return;
+      }
+      task.created_date = dmy;
+      document.getElementById('detail-created-display').textContent = `Criado: ${dmy}`;
+      saveTasks(true);
+      render();
     }
 
     function onDetailDatePicked(isoVal) {

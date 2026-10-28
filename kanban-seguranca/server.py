@@ -56,6 +56,7 @@ def init_db():
                 solution TEXT NOT NULL,
                 pillar TEXT NOT NULL,
                 activity TEXT NOT NULL,
+                created_date TEXT DEFAULT '27/10/2026',
                 month TEXT,
                 all_months TEXT,
                 schedule TEXT,
@@ -70,6 +71,8 @@ def init_db():
         # Migrate existing table if new columns do not exist yet
         c.execute("PRAGMA table_info(tasks)")
         cols = [row[1] for row in c.fetchall()]
+        if "created_date" not in cols:
+            c.execute("ALTER TABLE tasks ADD COLUMN created_date TEXT DEFAULT '27/10/2026'")
         if "assignee" not in cols:
             c.execute("ALTER TABLE tasks ADD COLUMN assignee TEXT DEFAULT ''")
         if "description" not in cols:
@@ -78,6 +81,7 @@ def init_db():
             c.execute("ALTER TABLE tasks ADD COLUMN subtasks TEXT DEFAULT '[]'")
         if "comments" not in cols:
             c.execute("ALTER TABLE tasks ADD COLUMN comments TEXT DEFAULT '[]'")
+        c.execute("UPDATE tasks SET created_date = '27/10/2026' WHERE created_date IS NULL OR TRIM(created_date) = ''")
 
         c.execute("SELECT COUNT(*) FROM tasks")
         count = c.fetchone()[0]
@@ -87,13 +91,14 @@ def init_db():
             now = time.time()
             for t in seed_tasks:
                 c.execute("""
-                    INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, description, subtasks, comments, updated_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    INSERT INTO tasks (id, solution, pillar, activity, created_date, month, all_months, schedule, status, assignee, description, subtasks, comments, updated_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """, (
                     int(t["id"]),
                     t.get("solution", ""),
                     t.get("pillar", ""),
                     t.get("activity", ""),
+                    (t.get("created_date") or "27/10/2026").strip() or "27/10/2026",
                     t.get("month", ""),
                     json.dumps(t.get("all_months", []), ensure_ascii=False),
                     normalize_schedule_ddmmyyyy(t.get("schedule", "")),
@@ -122,7 +127,7 @@ def get_all_tasks():
         conn = sqlite3.connect(DB_FILE)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        c.execute("SELECT id, solution, pillar, activity, month, all_months, schedule, status, assignee, description, subtasks, comments FROM tasks ORDER BY id ASC")
+        c.execute("SELECT id, solution, pillar, activity, created_date, month, all_months, schedule, status, assignee, description, subtasks, comments FROM tasks ORDER BY id ASC")
         rows = c.fetchall()
         conn.close()
         result = []
@@ -144,6 +149,7 @@ def get_all_tasks():
                 "solution": r["solution"],
                 "pillar": r["pillar"],
                 "activity": r["activity"],
+                "created_date": (r["created_date"] or "27/10/2026").strip() or "27/10/2026",
                 "month": r["month"] or "",
                 "all_months": all_m,
                 "schedule": r["schedule"] or "",
@@ -170,12 +176,13 @@ def save_all_tasks(tasks_list):
             c.execute("DELETE FROM tasks")
         for t in tasks_list:
             c.execute("""
-                INSERT INTO tasks (id, solution, pillar, activity, month, all_months, schedule, status, assignee, description, subtasks, comments, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO tasks (id, solution, pillar, activity, created_date, month, all_months, schedule, status, assignee, description, subtasks, comments, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
                     solution=excluded.solution,
                     pillar=excluded.pillar,
                     activity=excluded.activity,
+                    created_date=excluded.created_date,
                     month=excluded.month,
                     all_months=excluded.all_months,
                     schedule=excluded.schedule,
@@ -190,6 +197,7 @@ def save_all_tasks(tasks_list):
                 t.get("solution", ""),
                 t.get("pillar", ""),
                 t.get("activity", ""),
+                (t.get("created_date") or "27/10/2026").strip() or "27/10/2026",
                 t.get("month", ""),
                 json.dumps(t.get("all_months", []), ensure_ascii=False),
                 t.get("schedule", ""),

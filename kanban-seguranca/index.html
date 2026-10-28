@@ -451,21 +451,41 @@
             <option value="Gilvandro Almeida">Gilvandro Almeida</option>
           </select>
         </div>
-        <div>
-          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Prazo para Conclusão <span class="text-red-400">*</span> (Obrigatório)</label>
-          <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('modal-schedule-picker')">
-            <div class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
-              <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <span id="modal-schedule-display">Selecione o prazo (DD/MM/AAAA)...</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Data de Criação (DD/MM/AAAA)</label>
+            <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('modal-created-picker')">
+              <div class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span id="modal-created-display">DD/MM/AAAA</span>
+              </div>
+              <input
+                id="modal-created-picker"
+                type="date"
+                required
+                onchange="onNewModalCreatedPicked(this.value)"
+                onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+              />
             </div>
-            <input
-              id="modal-schedule-picker"
-              type="date"
-              required
-              onchange="onNewModalDatePicked(this.value)"
-              onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
-              class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-            />
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Prazo para Conclusão <span class="text-red-400">*</span></label>
+            <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('modal-schedule-picker')">
+              <div class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
+                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span id="modal-schedule-display" class="truncate">Selecione o prazo...</span>
+              </div>
+              <input
+                id="modal-schedule-picker"
+                type="date"
+                required
+                onchange="onNewModalDatePicked(this.value)"
+                onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -515,6 +535,22 @@
             />
 
             <div class="flex flex-wrap items-center gap-3 mt-2.5 text-xs text-[var(--muted-foreground)]">
+              <!-- Data de Criação abaixo do título (Editável quando Pendente/Em Andamento; somente leitura quando Concluído) -->
+              <div id="detail-created-wrapper" class="relative inline-flex items-center cursor-pointer" onclick="onTrelloModalCreatedClick()">
+                <div id="detail-created-box" class="inline-flex items-center gap-2 bg-[var(--background)] hover:border-slate-500 text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs transition">
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span id="detail-created-display" class="font-medium">Criado: DD/MM/AAAA</span>
+                </div>
+                <input
+                  id="detail-created"
+                  type="date"
+                  onchange="onTrelloCreatedPicked(this.value)"
+                  onclick="event.stopPropagation(); if(!this.disabled && this.showPicker) this.showPicker();"
+                  class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                  title="Clique para selecionar a data de criação no calendário"
+                />
+              </div>
+
               <!-- Prazo abaixo do título (Editável quando Pendente/Em Andamento; somente leitura quando Concluído) -->
               <div id="detail-schedule-wrapper" class="relative inline-flex items-center cursor-pointer" onclick="onTrelloModalDateClick()">
                 <div id="detail-schedule-box" class="inline-flex items-center gap-2 bg-[var(--background)] hover:border-slate-500 text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs transition">
@@ -636,6 +672,7 @@
         ],
         "schedule": "14/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -652,6 +689,7 @@
         ],
         "schedule": "21/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -668,6 +706,7 @@
         ],
         "schedule": "21/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -684,6 +723,7 @@
         ],
         "schedule": "28/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -700,6 +740,7 @@
         ],
         "schedule": "31/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -716,6 +757,7 @@
         ],
         "schedule": "31/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -732,6 +774,7 @@
         ],
         "schedule": "07/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -748,6 +791,7 @@
         ],
         "schedule": "31/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -764,6 +808,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -780,6 +825,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -796,6 +842,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -810,6 +857,7 @@
         "all_months": [],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -826,6 +874,7 @@
         ],
         "schedule": "14/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -842,6 +891,7 @@
         ],
         "schedule": "21/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -858,6 +908,7 @@
         ],
         "schedule": "28/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -875,6 +926,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -891,6 +943,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -907,6 +960,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -923,6 +977,7 @@
         ],
         "schedule": "21/10/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -940,6 +995,7 @@
         ],
         "schedule": "14/10/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -957,6 +1013,7 @@
         ],
         "schedule": "07/10/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -974,6 +1031,7 @@
         ],
         "schedule": "07/10/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -990,6 +1048,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1006,6 +1065,7 @@
         ],
         "schedule": "21/10/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1022,6 +1082,7 @@
         ],
         "schedule": "21/10/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1038,6 +1099,7 @@
         ],
         "schedule": "14/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1054,6 +1116,7 @@
         ],
         "schedule": "21/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1070,6 +1133,7 @@
         ],
         "schedule": "31/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1086,6 +1150,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1102,6 +1167,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1118,6 +1184,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1134,6 +1201,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1150,6 +1218,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1166,6 +1235,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1182,6 +1252,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1198,6 +1269,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1214,6 +1286,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1230,6 +1303,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1246,6 +1320,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1262,6 +1337,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1278,6 +1354,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1294,6 +1371,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "doing",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1311,6 +1389,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1327,6 +1406,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "doing",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1343,6 +1423,7 @@
         ],
         "schedule": "14/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1359,6 +1440,7 @@
         ],
         "schedule": "31/07/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1375,6 +1457,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1391,6 +1474,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1407,6 +1491,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1423,6 +1508,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1439,6 +1525,7 @@
         ],
         "schedule": "14/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1455,6 +1542,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1471,6 +1559,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1487,6 +1576,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1503,6 +1593,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1519,6 +1610,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1535,6 +1627,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1551,6 +1644,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1567,6 +1661,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1583,6 +1678,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1599,6 +1695,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1615,6 +1712,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1631,6 +1729,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1647,6 +1746,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1663,6 +1763,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1679,6 +1780,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1695,6 +1797,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1711,6 +1814,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1727,6 +1831,7 @@
         ],
         "schedule": "21/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1743,6 +1848,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1759,6 +1865,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1775,6 +1882,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1791,6 +1899,7 @@
         ],
         "schedule": "14/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1807,6 +1916,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "doing",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1823,6 +1933,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1839,6 +1950,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1855,6 +1967,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1871,6 +1984,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "doing",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1887,6 +2001,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1903,6 +2018,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "doing",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1919,6 +2035,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1935,6 +2052,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1951,6 +2069,7 @@
         ],
         "schedule": "28/08/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1967,6 +2086,7 @@
         ],
         "schedule": "07/09/2026",
         "status": "done",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1983,6 +2103,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "doing",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -1999,6 +2120,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -2015,6 +2137,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -2031,6 +2154,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -2048,6 +2172,7 @@
         ],
         "schedule": "30/11/2026",
         "status": "todo",
+        "created_date": "27/10/2026",
         "assignee": "",
         "description": "",
         "subtasks": [],
@@ -2492,6 +2617,16 @@
       inp.click();
     }
 
+    function onCardCreatedPicked(id, isoVal) {
+      const task = tasks.find(t => t.id === id);
+      if (!task || task.status === 'done') return;
+      const dmy = toDDMMYYYY(isoVal);
+      if (!dmy) return;
+      task.created_date = dmy;
+      saveTasks(true);
+      render();
+    }
+
     function onCardDatePicked(id, isoVal) {
       const task = tasks.find(t => t.id === id);
       if (!task || task.status === 'done') return;
@@ -2520,6 +2655,8 @@
     }
 
     function createCardHTML(task) {
+      const formattedCreated = toDDMMYYYY(task.created_date) || '27/10/2026';
+      const isoCreated = toISODate(formattedCreated);
       const formattedDate = toDDMMYYYY(task.schedule) || 'DD/MM/AAAA';
       const isoDate = toISODate(task.schedule);
       const currentAssignee = task.assignee || '';
@@ -2586,6 +2723,23 @@
                 <div
                   class="relative inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md hover:bg-[var(--secondary)] hover:text-[var(--foreground)] transition cursor-pointer"
                   onmousedown="event.stopPropagation()"
+                  onclick="event.stopPropagation(); triggerDateInput('card-created-${task.id}')"
+                  title="Data de criação (clique para alterar no calendário)"
+                >
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span>Criado: ${escapeHTML(formattedCreated)}</span>
+                  <input
+                    id="card-created-${task.id}"
+                    type="date"
+                    value="${isoCreated}"
+                    onchange="onCardCreatedPicked(${task.id}, this.value)"
+                    onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                    class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+                  />
+                </div>
+                <div
+                  class="relative inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md hover:bg-[var(--secondary)] hover:text-[var(--foreground)] transition cursor-pointer"
+                  onmousedown="event.stopPropagation()"
                   onclick="event.stopPropagation(); triggerDateInput('card-date-${task.id}')"
                   title="Clique no calendário para alterar o prazo de conclusão (DD/MM/AAAA)"
                 >
@@ -2601,6 +2755,15 @@
                   />
                 </div>
               ` : `
+                <div
+                  class="inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md text-[var(--muted-foreground)]/80 cursor-default"
+                  onmousedown="event.stopPropagation()"
+                  onclick="event.stopPropagation()"
+                  title="Data de criação somente leitura (demanda concluída)"
+                >
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-60" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span>Criado: ${escapeHTML(formattedCreated)}</span>
+                </div>
                 <div
                   class="inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md text-[var(--muted-foreground)]/80 cursor-default"
                   onmousedown="event.stopPropagation()"
@@ -2727,9 +2890,16 @@
     }
 
     // Modal Nova / Editar Atividade
+    function onNewModalCreatedPicked(isoVal) {
+      const dmy = toDDMMYYYY(isoVal);
+      if (dmy) {
+        document.getElementById('modal-created-display').textContent = dmy;
+      }
+    }
+
     function onNewModalDatePicked(isoVal) {
       const dmy = toDDMMYYYY(isoVal);
-      document.getElementById('modal-schedule-display').textContent = dmy || 'Selecione o prazo (DD/MM/AAAA)...';
+      document.getElementById('modal-schedule-display').textContent = dmy || 'Selecione o prazo...';
     }
 
     function openNewTaskModal() {
@@ -2741,8 +2911,11 @@
       document.getElementById('modal-pillar').value = '';
       document.getElementById('modal-activity').value = '';
       document.getElementById('modal-assignee').value = '';
+      const todayIso = new Date().toISOString().split('T')[0];
+      document.getElementById('modal-created-picker').value = todayIso;
+      document.getElementById('modal-created-display').textContent = toDDMMYYYY(todayIso);
       document.getElementById('modal-schedule-picker').value = '';
-      document.getElementById('modal-schedule-display').textContent = 'Selecione o prazo (DD/MM/AAAA)...';
+      document.getElementById('modal-schedule-display').textContent = 'Selecione o prazo...';
       const modal = document.getElementById('task-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -2763,6 +2936,8 @@
       const pillar = document.getElementById('modal-pillar').value.trim() || 'Geral';
       const activity = document.getElementById('modal-activity').value.trim();
       const assignee = document.getElementById('modal-assignee').value;
+      const isoCreated = document.getElementById('modal-created-picker').value;
+      const created_date = toDDMMYYYY(isoCreated) || toDDMMYYYY(new Date().toISOString().split('T')[0]);
       const isoVal = document.getElementById('modal-schedule-picker').value;
       const schedule = toDDMMYYYY(isoVal);
 
@@ -2781,6 +2956,7 @@
         solution,
         pillar,
         activity,
+        created_date,
         assignee,
         month: '',
         all_months: [],
@@ -2797,6 +2973,13 @@
     }
 
     // JANELA FLUTUANTE ESTILO TRELLO (Ao clicar em qualquer card)
+    function onTrelloModalCreatedClick() {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || task.status === 'done') return;
+      triggerDateInput('detail-created');
+    }
+
     function onTrelloModalDateClick() {
       if (activeCardId === null) return;
       const task = tasks.find(t => t.id === activeCardId);
@@ -2809,11 +2992,21 @@
       if (!task) return;
       activeCardId = id;
 
+      const createdDmy = toDDMMYYYY(task.created_date) || '27/10/2026';
+      const createdIso = toISODate(createdDmy);
       const dmy = toDDMMYYYY(task.schedule);
       const iso = toISODate(task.schedule);
       const isEditable = task.status !== 'done';
 
       document.getElementById('detail-activity').value = task.activity || '';
+
+      const detailCreatedInput = document.getElementById('detail-created');
+      const detailCreatedWrapper = document.getElementById('detail-created-wrapper');
+      const detailCreatedBox = document.getElementById('detail-created-box');
+      detailCreatedInput.value = createdIso;
+      detailCreatedInput.disabled = !isEditable;
+      document.getElementById('detail-created-display').textContent = `Criado: ${createdDmy}`;
+
       const detailDateInput = document.getElementById('detail-schedule');
       const detailDateWrapper = document.getElementById('detail-schedule-wrapper');
       const detailDateBox = document.getElementById('detail-schedule-box');
@@ -2822,12 +3015,24 @@
       document.getElementById('detail-schedule-display').textContent = `Prazo: ${dmy || 'DD/MM/AAAA'}`;
 
       if (isEditable) {
+        detailCreatedInput.classList.remove('hidden', 'pointer-events-none');
+        detailCreatedWrapper.classList.remove('cursor-default');
+        detailCreatedWrapper.classList.add('cursor-pointer');
+        detailCreatedBox.classList.add('hover:border-slate-500');
+        detailCreatedWrapper.title = 'Clique para alterar a data de criação';
+
         detailDateInput.classList.remove('hidden', 'pointer-events-none');
         detailDateWrapper.classList.remove('cursor-default');
         detailDateWrapper.classList.add('cursor-pointer');
         detailDateBox.classList.add('hover:border-slate-500');
         detailDateWrapper.title = 'Clique para alterar o prazo de conclusão';
       } else {
+        detailCreatedInput.classList.add('hidden', 'pointer-events-none');
+        detailCreatedWrapper.classList.remove('cursor-pointer');
+        detailCreatedWrapper.classList.add('cursor-default');
+        detailCreatedBox.classList.remove('hover:border-slate-500');
+        detailCreatedWrapper.title = 'Data de criação somente leitura (demanda concluída)';
+
         detailDateInput.classList.add('hidden', 'pointer-events-none');
         detailDateWrapper.classList.remove('cursor-pointer');
         detailDateWrapper.classList.add('cursor-default');
@@ -2860,6 +3065,18 @@
       const modal = document.getElementById('trello-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+    }
+
+    function onTrelloCreatedPicked(isoVal) {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || task.status === 'done') return;
+      const dmy = toDDMMYYYY(isoVal);
+      if (!dmy) return;
+      task.created_date = dmy;
+      document.getElementById('detail-created-display').textContent = `Criado: ${dmy}`;
+      saveTasks(true);
+      render();
     }
 
     function onTrelloDatePicked(isoVal) {

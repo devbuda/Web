@@ -23,6 +23,7 @@ def init_db():
             CREATE TABLE IF NOT EXISTS tasks (
                 id INTEGER PRIMARY KEY,
                 title TEXT NOT NULL,
+                created_date TEXT DEFAULT '27/10/2026',
                 date_label TEXT,
                 description TEXT,
                 subtasks TEXT,
@@ -36,7 +37,10 @@ def init_db():
         cols = [row[1] for row in c.fetchall()]
         if "assignee" not in cols:
             c.execute("ALTER TABLE tasks ADD COLUMN assignee TEXT DEFAULT 'Victor Freire'")
+        if "created_date" not in cols:
+            c.execute("ALTER TABLE tasks ADD COLUMN created_date TEXT DEFAULT '27/10/2026'")
         c.execute("UPDATE tasks SET assignee = 'Victor Freire' WHERE assignee IS NULL OR TRIM(assignee) = ''")
+        c.execute("UPDATE tasks SET created_date = '27/10/2026' WHERE created_date IS NULL OR TRIM(created_date) = ''")
         # Set deadline of current demands to last day of next month (30/11/2026) if still on default seed date or empty
         c.execute("UPDATE tasks SET date_label = '30/11/2026' WHERE date_label IS NULL OR TRIM(date_label) = '' OR date_label = '2026-10-27' OR date_label = '27/10/2026'")
         # Update Serlyo demand title to the improved corporate wording and ensure status is 'todo'
@@ -54,7 +58,7 @@ def get_all_tasks():
         conn = sqlite3.connect(DB_FILE)
         conn.row_factory = sqlite3.Row
         c = conn.cursor()
-        c.execute("SELECT id, title, date_label, description, subtasks, comments, status, assignee FROM tasks ORDER BY id ASC")
+        c.execute("SELECT id, title, created_date, date_label, description, subtasks, comments, status, assignee FROM tasks ORDER BY id ASC")
         rows = c.fetchall()
         conn.close()
         result = []
@@ -70,6 +74,7 @@ def get_all_tasks():
             result.append({
                 "id": r["id"],
                 "title": r["title"],
+                "created_date": (r["created_date"] or "27/10/2026").strip() or "27/10/2026",
                 "date": r["date_label"] or "",
                 "description": r["description"] or "",
                 "subtasks": subtasks,
@@ -95,10 +100,11 @@ def save_all_tasks(tasks_list):
 
         for t in tasks_list:
             c.execute("""
-                INSERT INTO tasks (id, title, date_label, description, subtasks, comments, status, assignee, updated_at)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO tasks (id, title, created_date, date_label, description, subtasks, comments, status, assignee, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id) DO UPDATE SET
                     title=excluded.title,
+                    created_date=excluded.created_date,
                     date_label=excluded.date_label,
                     description=excluded.description,
                     subtasks=excluded.subtasks,
@@ -109,6 +115,7 @@ def save_all_tasks(tasks_list):
             """, (
                 int(t["id"]),
                 t.get("title", ""),
+                (t.get("created_date") or "27/10/2026").strip() or "27/10/2026",
                 t.get("date", ""),
                 t.get("description", ""),
                 json.dumps(t.get("subtasks", []), ensure_ascii=False),
