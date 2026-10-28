@@ -105,10 +105,12 @@ def init_db():
                     now
                 ))
         else:
-            # Migrate any existing free-text schedules in DB to DD/MM/AAAA
-            c.execute("SELECT id, schedule FROM tasks")
-            for row_id, row_sched in c.fetchall():
+            # Migrate any existing free-text schedules in DB to DD/MM/AAAA and set active tasks deadline to 30/11/2026
+            c.execute("SELECT id, schedule, status FROM tasks")
+            for row_id, row_sched, row_status in c.fetchall():
                 new_sched = normalize_schedule_ddmmyyyy(row_sched or "")
+                if row_status in ("todo", "doing") and (not new_sched or new_sched != "30/11/2026"):
+                    new_sched = "30/11/2026"
                 if new_sched != (row_sched or ""):
                     c.execute("UPDATE tasks SET schedule = ? WHERE id = ?", (new_sched, row_id))
         conn.commit()

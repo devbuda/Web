@@ -37,6 +37,14 @@ def init_db():
         if "assignee" not in cols:
             c.execute("ALTER TABLE tasks ADD COLUMN assignee TEXT DEFAULT 'Victor Freire'")
         c.execute("UPDATE tasks SET assignee = 'Victor Freire' WHERE assignee IS NULL OR TRIM(assignee) = ''")
+        # Set deadline of current demands to last day of next month (30/11/2026) if still on default seed date or empty
+        c.execute("UPDATE tasks SET date_label = '30/11/2026' WHERE date_label IS NULL OR TRIM(date_label) = '' OR date_label = '2026-10-27' OR date_label = '27/10/2026'")
+        # Update Serlyo demand title to the improved corporate wording and ensure status is 'todo'
+        improved_title = "Alinhar com Serlyo a emissão de procurações eletrônicas para centralizar e controlar o uso do Certificado Digital"
+        c.execute("SELECT id FROM tasks WHERE LOWER(title) LIKE '%serlyo%'")
+        serlyo_rows = c.fetchall()
+        if serlyo_rows:
+            c.execute("UPDATE tasks SET title = ?, status = 'todo', date_label = '30/11/2026' WHERE id = ?", (improved_title, serlyo_rows[0][0]))
         conn.commit()
         conn.close()
 

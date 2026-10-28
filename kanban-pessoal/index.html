@@ -387,15 +387,18 @@
           </select>
         </div>
         <div>
-          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">Data (DD/MM/AAAA)</label>
+          <label class="block text-xs font-medium text-[var(--muted-foreground)] mb-1">
+            Prazo para Conclusão <span class="text-red-400 font-bold">*</span> <span class="text-[11px] opacity-80">(Obrigatório - DD/MM/AAAA)</span>
+          </label>
           <div class="relative flex items-center cursor-pointer" onclick="triggerDateInput('new-card-date')">
-            <div class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
+            <div id="new-card-date-box" class="w-full px-3 py-2 rounded-lg text-xs bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 flex items-center gap-2 text-[var(--foreground)]">
               <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              <span id="new-card-date-display">DD/MM/AAAA</span>
+              <span id="new-card-date-display" class="text-[var(--muted-foreground)]">Selecione o prazo (DD/MM/AAAA)...</span>
             </div>
             <input
               id="new-card-date"
               type="date"
+              required
               onchange="onNewCardDatePicked(this.value)"
               onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
               class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
@@ -436,7 +439,7 @@
         <!-- Coluna da Esquerda: Título, Data abaixo do título, Botão Adicionar Tarefa e Caixa de Descrição com Checkboxes -->
         <div class="lg:col-span-7 p-6 border-b lg:border-b-0 lg:border-r border-[var(--border)] flex flex-col gap-5">
 
-          <!-- Título, Data (DD/MM/AAAA) e Responsável abaixo do título -->
+          <!-- Título, Prazo (DD/MM/AAAA) e Responsável abaixo do título -->
           <div>
             <input
               id="detail-title"
@@ -446,19 +449,19 @@
               placeholder="Título do card"
             />
             <div class="flex flex-wrap items-center gap-3 mt-2.5 text-xs text-[var(--muted-foreground)]">
-              <!-- Data abaixo do título (Clicar no ícone do calendário abre o seletor e exibe DD/MM/AAAA) -->
-              <div class="relative inline-flex items-center cursor-pointer" onclick="triggerDateInput('detail-date')">
-                <div class="inline-flex items-center gap-2 bg-[var(--background)] hover:border-slate-500 text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs transition">
+              <!-- Prazo abaixo do título (Editável em Pendente/Em Andamento; somente indicativo quando Concluído) -->
+              <div id="detail-date-wrapper" class="relative inline-flex items-center cursor-pointer" onclick="onModalDateWrapperClick()">
+                <div id="detail-date-box" class="inline-flex items-center gap-2 bg-[var(--background)] hover:border-slate-500 text-[var(--foreground)] border border-[var(--border)] rounded-md px-2.5 py-1 text-xs transition">
                   <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                  <span id="detail-date-display" class="font-medium">DD/MM/AAAA</span>
+                  <span id="detail-date-display" class="font-medium">Prazo: DD/MM/AAAA</span>
                 </div>
                 <input
                   id="detail-date"
                   type="date"
                   onchange="onDetailDatePicked(this.value)"
-                  onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+                  onclick="event.stopPropagation(); if(!this.disabled && this.showPicker) this.showPicker();"
                   class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                  title="Clique para selecionar a data no calendário"
+                  title="Clique para alterar o prazo de conclusão"
                 />
               </div>
 
@@ -726,8 +729,14 @@
 
     function onCardDatePicked(id, isoVal) {
       const task = tasks.find(t => t.id === id);
-      if (!task) return;
-      task.date = toDDMMYYYY(isoVal);
+      if (!task || task.status === 'done') return;
+      const dmy = toDDMMYYYY(isoVal);
+      if (!dmy) {
+        alert('O prazo para conclusão é obrigatório para demandas pendentes ou em andamento.');
+        render();
+        return;
+      }
+      task.date = dmy;
       saveTasks(true);
       render();
     }
@@ -904,8 +913,9 @@
     }
 
     function createCardHTML(task) {
-      const formattedDate = toDDMMYYYY(task.date) || 'DD/MM/AAAA';
-      const isoDate = toISODate(task.date);
+      const formattedDate = toDDMMYYYY(task.date) || '30/11/2026';
+      const isoDate = toISODate(formattedDate);
+      const isEditableDeadline = task.status !== 'done';
       const currentAssignee = (task.assignee || DEFAULT_ASSIGNEE).trim() || DEFAULT_ASSIGNEE;
       const isMenuOpen = openAssigneeMenuTaskId === task.id;
       const subtasks = Array.isArray(task.subtasks) ? task.subtasks : [];
@@ -922,6 +932,34 @@
         accentBorder = 'border-l-2 border-l-emerald-500/60 hover:border-emerald-500/40';
         statusDot = '<span class="w-2 h-2 rounded-full bg-emerald-500/75 shrink-0" title="Concluído"></span>';
       }
+
+      const deadlineHTML = isEditableDeadline ? `
+        <div
+          class="relative inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md hover:bg-[var(--secondary)] hover:text-[var(--foreground)] transition cursor-pointer"
+          onmousedown="event.stopPropagation()"
+          onclick="event.stopPropagation(); triggerDateInput('card-date-${task.id}')"
+          title="Prazo para conclusão obrigatório (clique para editar no calendário)"
+        >
+          <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Prazo: ${escapeHTML(formattedDate)}</span>
+          <input
+            id="card-date-${task.id}"
+            type="date"
+            value="${isoDate}"
+            onchange="onCardDatePicked(${task.id}, this.value)"
+            onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
+            class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+          />
+        </div>
+      ` : `
+        <div
+          class="inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 text-[var(--muted-foreground)]/80 cursor-default"
+          title="Prazo de conclusão (somente indicativo em demandas concluídas)"
+        >
+          <svg class="w-3.5 h-3.5 shrink-0 opacity-70" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+          <span>Prazo: ${escapeHTML(formattedDate)}</span>
+        </div>
+      `;
 
       const menuHTML = isMenuOpen ? `
         <div
@@ -962,23 +1000,7 @@
 
           <div class="flex items-center justify-between gap-2 pt-1 mt-auto text-xs text-[var(--muted-foreground)]">
             <div class="inline-flex items-center gap-2.5 min-w-0 flex-wrap">
-              <div
-                class="relative inline-flex items-center gap-1.5 px-1.5 py-0.5 -mx-1.5 rounded-md hover:bg-[var(--secondary)] hover:text-[var(--foreground)] transition cursor-pointer"
-                onmousedown="event.stopPropagation()"
-                onclick="event.stopPropagation(); triggerDateInput('card-date-${task.id}')"
-                title="Clique no calendário para selecionar a data (DD/MM/AAAA)"
-              >
-                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                <span>${escapeHTML(formattedDate)}</span>
-                <input
-                  id="card-date-${task.id}"
-                  type="date"
-                  value="${isoDate}"
-                  onchange="onCardDatePicked(${task.id}, this.value)"
-                  onclick="event.stopPropagation(); if(this.showPicker) this.showPicker();"
-                  class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-                />
-              </div>
+              ${deadlineHTML}
 
               ${subtasks.length > 0 ? `
                 <span class="inline-flex items-center gap-1 text-xs ${doneSubtasks === subtasks.length ? 'text-emerald-400' : 'text-[var(--muted-foreground)]'}">
@@ -1041,6 +1063,9 @@
       const task = tasks.find(t => t.id === id);
       if (task && task.status !== newStatus) {
         task.status = newStatus;
+        if ((newStatus === 'todo' || newStatus === 'doing') && !toDDMMYYYY(task.date)) {
+          task.date = '30/11/2026';
+        }
         saveTasks(true);
         render();
       }
@@ -1089,18 +1114,33 @@
       }
     }
 
-    // Modal Nova Demanda Rápida
+    // Modal Nova Demanda Rápida (Prazo para Conclusão Obrigatório)
     function onNewCardDatePicked(isoVal) {
       const dmy = toDDMMYYYY(isoVal);
-      document.getElementById('new-card-date-display').textContent = dmy || 'DD/MM/AAAA';
+      const disp = document.getElementById('new-card-date-display');
+      const box = document.getElementById('new-card-date-box');
+      if (dmy) {
+        disp.textContent = `Prazo: ${dmy}`;
+        disp.classList.remove('text-[var(--muted-foreground)]');
+        disp.classList.add('text-[var(--foreground)]', 'font-medium');
+        if (box) box.classList.remove('border-red-500/60');
+      } else {
+        disp.textContent = 'Selecione o prazo (DD/MM/AAAA)...';
+        disp.classList.add('text-[var(--muted-foreground)]');
+        disp.classList.remove('text-[var(--foreground)]', 'font-medium');
+      }
     }
 
     function openNewCardModal() {
       document.getElementById('new-card-title').value = '';
       document.getElementById('new-card-assignee').value = DEFAULT_ASSIGNEE;
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('new-card-date').value = today;
-      document.getElementById('new-card-date-display').textContent = toDDMMYYYY(today);
+      document.getElementById('new-card-date').value = '';
+      const disp = document.getElementById('new-card-date-display');
+      disp.textContent = 'Selecione o prazo (DD/MM/AAAA)...';
+      disp.classList.add('text-[var(--muted-foreground)]');
+      disp.classList.remove('text-[var(--foreground)]', 'font-medium');
+      const box = document.getElementById('new-card-date-box');
+      if (box) box.classList.remove('border-red-500/60');
       const modal = document.getElementById('new-card-modal');
       modal.classList.remove('hidden');
       modal.classList.add('flex');
@@ -1120,6 +1160,14 @@
       const assignee = document.getElementById('new-card-assignee').value || DEFAULT_ASSIGNEE;
       if (!title) {
         alert('Informe o título da demanda.');
+        document.getElementById('new-card-title').focus();
+        return;
+      }
+      if (!date) {
+        const box = document.getElementById('new-card-date-box');
+        if (box) box.classList.add('border-red-500/60');
+        alert('Informe obrigatoriamente o prazo para conclusão da demanda (DD/MM/AAAA).');
+        triggerDateInput('new-card-date');
         return;
       }
       const nextId = tasks.reduce((max, t) => Math.max(max, t.id), 0) + 1;
@@ -1140,18 +1188,46 @@
     }
 
     // JANELA FLUTUANTE ESTILO TRELLO
+    function onModalDateWrapperClick() {
+      if (activeCardId === null) return;
+      const task = tasks.find(t => t.id === activeCardId);
+      if (!task || task.status === 'done') return;
+      triggerDateInput('detail-date');
+    }
+
     function openTrelloModal(id) {
       const task = tasks.find(t => t.id === id);
       if (!task) return;
       activeCardId = id;
 
-      const dmy = toDDMMYYYY(task.date);
-      const iso = toISODate(task.date);
+      const dmy = toDDMMYYYY(task.date) || '30/11/2026';
+      const iso = toISODate(dmy);
+      const isEditableDeadline = task.status !== 'done';
       const currentAssignee = (task.assignee || DEFAULT_ASSIGNEE).trim() || DEFAULT_ASSIGNEE;
 
       document.getElementById('detail-title').value = task.title || '';
-      document.getElementById('detail-date').value = iso;
-      document.getElementById('detail-date-display').textContent = dmy || 'DD/MM/AAAA';
+      const dateInput = document.getElementById('detail-date');
+      const dateWrapper = document.getElementById('detail-date-wrapper');
+      const dateBox = document.getElementById('detail-date-box');
+      dateInput.value = iso;
+      document.getElementById('detail-date-display').textContent = `Prazo: ${dmy}`;
+
+      if (isEditableDeadline) {
+        dateInput.disabled = false;
+        dateInput.classList.remove('hidden', 'pointer-events-none');
+        dateWrapper.classList.add('cursor-pointer');
+        dateWrapper.classList.remove('cursor-default', 'opacity-80');
+        dateBox.classList.add('hover:border-slate-500');
+        dateWrapper.title = 'Clique para alterar o prazo de conclusão';
+      } else {
+        dateInput.disabled = true;
+        dateInput.classList.add('hidden', 'pointer-events-none');
+        dateWrapper.classList.remove('cursor-pointer');
+        dateWrapper.classList.add('cursor-default', 'opacity-80');
+        dateBox.classList.remove('hover:border-slate-500');
+        dateWrapper.title = 'Prazo de conclusão (somente indicativo em demandas concluídas)';
+      }
+
       document.getElementById('detail-assignee-label').textContent = currentAssignee;
       document.getElementById('detail-assignee-menu').classList.add('hidden');
       document.getElementById('detail-description').value = task.description || '';
@@ -1181,10 +1257,15 @@
     function onDetailDatePicked(isoVal) {
       if (activeCardId === null) return;
       const task = tasks.find(t => t.id === activeCardId);
-      if (!task) return;
+      if (!task || task.status === 'done') return;
       const dmy = toDDMMYYYY(isoVal);
+      if (!dmy) {
+        alert('O prazo para conclusão é obrigatório para demandas pendentes ou em andamento.');
+        document.getElementById('detail-date').value = toISODate(task.date || '30/11/2026');
+        return;
+      }
       task.date = dmy;
-      document.getElementById('detail-date-display').textContent = dmy || 'DD/MM/AAAA';
+      document.getElementById('detail-date-display').textContent = `Prazo: ${dmy}`;
       saveTasks(true);
       render();
     }
