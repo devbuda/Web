@@ -567,9 +567,10 @@
                 />
               </div>
 
-              <!-- Responsável fixo (clicar no nome abre lista dos 3 atores) -->
+              <!-- Responsável fixo (editável quando Pendente/Em Andamento; somente leitura quando Concluído) -->
               <div class="relative inline-flex items-center" onclick="event.stopPropagation()">
                 <button
+                  id="detail-assignee-btn"
                   type="button"
                   onclick="toggleModalAssigneeMenu(event)"
                   class="inline-flex items-center gap-1.5 bg-[var(--background)] border border-[var(--border)] hover:border-slate-500 rounded-md px-2.5 py-1 text-xs transition cursor-pointer"
@@ -2639,6 +2640,8 @@
 
     function toggleAssigneeMenu(event, id) {
       event.stopPropagation();
+      const task = tasks.find(t => t.id === id);
+      if (!task || task.status === 'done') return;
       openAssigneeMenuTaskId = (openAssigneeMenuTaskId === id) ? null : id;
       render();
     }
@@ -2647,7 +2650,7 @@
       event.stopPropagation();
       openAssigneeMenuTaskId = null;
       const task = tasks.find(t => t.id === id);
-      if (task) {
+      if (task && task.status !== 'done') {
         task.assignee = assignee;
         saveTasks(true);
       }
@@ -2787,20 +2790,30 @@
             </div>
 
             <div class="relative ml-auto shrink-0" onmousedown="event.stopPropagation()" onclick="event.stopPropagation()" ondblclick="event.stopPropagation()">
-              <button
-                type="button"
-                onclick="toggleAssigneeMenu(event, ${task.id})"
-                class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md transition cursor-pointer ${
-                  currentAssignee
-                    ? 'text-[var(--foreground)] font-medium hover:bg-[var(--secondary)]'
-                    : 'text-[var(--muted-foreground)]/75 hover:text-[var(--foreground)] hover:bg-[var(--secondary)]'
-                }"
-                title="Clique no nome para selecionar ou alterar o responsável"
-              >
-                <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                <span>${escapeHTML(currentAssignee || 'Responsável')}</span>
-              </button>
-              ${menuHTML}
+              ${task.status !== 'done' ? `
+                <button
+                  type="button"
+                  onclick="toggleAssigneeMenu(event, ${task.id})"
+                  class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md transition cursor-pointer ${
+                    currentAssignee
+                      ? 'text-[var(--foreground)] font-medium hover:bg-[var(--secondary)]'
+                      : 'text-[var(--muted-foreground)]/75 hover:text-[var(--foreground)] hover:bg-[var(--secondary)]'
+                  }"
+                  title="Clique no nome para selecionar ou alterar o responsável"
+                >
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-75" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                  <span>${escapeHTML(currentAssignee || 'Responsável')}</span>
+                </button>
+                ${menuHTML}
+              ` : `
+                <div
+                  class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[var(--muted-foreground)]/80 font-medium cursor-default"
+                  title="Responsável somente leitura (demanda concluída)"
+                >
+                  <svg class="w-3.5 h-3.5 shrink-0 opacity-65" fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                  <span>${escapeHTML(currentAssignee || 'Responsável')}</span>
+                </div>
+              `}
             </div>
           </div>
         </div>
@@ -3043,8 +3056,20 @@
       document.getElementById('detail-description').value = task.description || '';
       document.getElementById('new-comment-input').value = '';
       document.getElementById('trello-solution-pillar-badge').textContent = `${task.solution || ''} • ${task.pillar || ''}`;
+      const detailAssigneeBtn = document.getElementById('detail-assignee-btn');
       document.getElementById('detail-assignee-label').textContent = task.assignee || 'Responsável';
       document.getElementById('detail-assignee-menu').classList.add('hidden');
+      if (detailAssigneeBtn) {
+        if (isEditable) {
+          detailAssigneeBtn.classList.add('cursor-pointer', 'hover:border-slate-500');
+          detailAssigneeBtn.classList.remove('cursor-default', 'opacity-80');
+          detailAssigneeBtn.title = 'Clique para selecionar o responsável';
+        } else {
+          detailAssigneeBtn.classList.remove('cursor-pointer', 'hover:border-slate-500');
+          detailAssigneeBtn.classList.add('cursor-default', 'opacity-80');
+          detailAssigneeBtn.title = 'Responsável somente leitura (demanda concluída)';
+        }
+      }
 
       const dot = document.getElementById('trello-status-dot');
       const lbl = document.getElementById('trello-status-label');
@@ -3103,7 +3128,7 @@
       event.stopPropagation();
       if (activeCardId === null) return;
       const task = tasks.find(t => t.id === activeCardId);
-      if (!task) return;
+      if (!task || task.status === 'done') return;
       const menu = document.getElementById('detail-assignee-menu');
       if (!menu.classList.contains('hidden')) {
         menu.classList.add('hidden');
@@ -3129,7 +3154,7 @@
       event.stopPropagation();
       if (activeCardId === null) return;
       const task = tasks.find(t => t.id === activeCardId);
-      if (!task) return;
+      if (!task || task.status === 'done') return;
       task.assignee = name;
       document.getElementById('detail-assignee-label').textContent = name;
       document.getElementById('detail-assignee-menu').classList.add('hidden');
